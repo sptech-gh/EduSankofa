@@ -1,0 +1,7 @@
+const demoData = {
+  name: "Test Demo School",
+  subdomain: "testdemo" + Date.now()
+};
+
+console.log('Testing demo creation via API...');
+console.log('Data:', JSON.stringify(demoData, null, 2));

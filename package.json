@@ -1,0 +1,82 @@
+{
+  "name": "edusankofa-school-management",
+  "version": "1.0.0",
+  "description": "EduSankofa Basic School Management System - Full Stack Application",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run server:dev\" \"npm run client:dev\"",
+    "server:dev": "cd server && npm run dev",
+    "client:dev": "cd client && npm start",
+    "server:build": "cd server && npm run build",
+    "client:build": "cd client && npm run build",
+    "build": "npm run server:build && npm run client:build",
+    "server:start": "cd server && npm start",
+    "client:start": "cd client && npm start",
+    "start": "npm run server:start",
+    "test": "npm run server:test && npm run client:test",
+    "server:test": "cd server && npm test",
+    "client:test": "cd client && npm test",
+    "lint": "npm run server:lint && npm run client:lint",
+    "server:lint": "cd server && npm run lint",
+    "client:lint": "cd client && npm run lint",
+    "test:all": "npm run server:test && npm run client:test && npm run test:integration && npm run test:regression",
+    "test:unit": "npm run server:test",
+    "test:integration": "npm run server/tests/integration",
+    "test:regression": "node run_tests.js",
+    "install:clean": "rm -rf server/node_modules client/node_modules && npm install && npm run install:clean",
+    "install:all": "npm install && npm run install:server && npm run install:client",
+    "install:server": "cd server && npm install",
+    "install:client": "cd client && npm install",
+    "install:clean": "npm run clean && npm install",
+    "clean": "rm -rf server/node_modules client/node_modules client/build server/coverage",
+    "clean:build": "npm run clean && npm run build",
+    "deploy:build": "npm run build && npm run deploy:staging",
+    "deploy:prod": "npm run build && npm run deploy:production",
+    "deploy:staging": "npm run build && npm run deploy:staging",
+    "deploy:production": "npm run build && npm run deploy:production",
+    "docker:build": "docker build -t edusankofa-school-management",
+    "docker:run": "docker run -p 5000:5000 edusankofa-school-management",
+    "docker:prod": "docker-compose -f docker-compose.prod.yml up -d",
+    "docker:staging": "docker-compose -f docker-compose.staging.yml up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs",
+    "docker:clean": "docker-compose down -v && docker system prune -f",
+    "health:check": "curl -f http://localhost:5000/health",
+    "backup:create": "node scripts/backup.js",
+    "backup:restore": "node scripts/restore.js",
+    "migrate:up": "node scripts/migrate.js",
+    "migrate:down": "node scripts/migrate.js down",
+    "seed": "node server/scripts/seedDemoUsers.js",
+    "seed:data": "node server/scripts/seedSchoolData.js",
+    "logs:server": "tail -f server/logs/app.log",
+    "logs:client": "tail -f client/logs/app.log",
+    "logs:all": "tail -f server/logs/app.log && tail -f client/logs/app.log",
+    "monitor": "node scripts/monitor.js"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "author": "EduSankofa Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edusankofa/school-management"
+  },
+  "keywords": [
+    "education",
+    "school-management",
+    "react",
+    "express",
+    "mongodb",
+    "nodejs",
+    "ghana"
+  ]
+}

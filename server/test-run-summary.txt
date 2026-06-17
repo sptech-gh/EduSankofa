@@ -1,0 +1,3017 @@
+﻿
+> school-management-server@1.0.0 test
+> jest --runInBand --verbose
+
+node.exe : FAIL tests/systemWideSimple.test.js (9.328 s)
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL tests/syst...s 
+   t.js (9.328 s):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  System-Wide Integration Tests
+    Module Integration
+      ├ù All required models should be importable (718 ms)
+      ├ù All required routes should be importable (1675 ms)
+    Ghanaian Education System Compliance
+      ΓêÜ Ghanaian class levels should be properly defined (157 
+ms)
+      ├ù Ghanaian grading system should be implemented (42 ms)
+      ├ù Ghanaian term structure should be correct (33 ms)
+    Financial System Compliance
+      ΓêÜ Ghanaian currency should be supported (34 ms)
+      ΓêÜ Mobile money payment methods should be supported (28 
+ms)
+    Security and Compliance
+      ├ù Password strength validation should work correctly (111 
+ms)
+    Data Integrity
+      ├ù Report card calculations should be accurate (45 ms)
+      ΓêÜ Fee calculations should be accurate (42 ms)
+    Role-Based Access Control
+      ΓêÜ RBAC middleware should validate permissions correctly 
+(27 ms)
+      ΓêÜ Permission matrix should cover all roles (38 ms)
+    Performance Optimization
+      ├ù Database indexes should be properly defined (74 ms)
+      ΓêÜ Virtual fields should not impact performance 
+significantly (51 ms)
+    Edge Cases
+      ΓêÜ Empty arrays should be handled gracefully (34 ms)
+      ΓêÜ Null values should be handled gracefully (32 ms)
+    Data Relationships
+      ├ù Model relationships should be properly defined (25 ms)
+  System Performance Tests
+    ΓêÜ Large dataset operations should complete within time 
+limits (241 ms)
+    ΓêÜ Memory usage should remain reasonable (2635 ms)
+  System Compliance Tests
+    ├ù All modules should be Ghanaian education compliant (24 ms)
+    ├ù Data retention policies should be enforced (49 ms)
+    ├ù Audit logging should capture all critical events (41 ms)
+  Performance Benchmarks
+    ├ù Report card generation should be fast (60 ms)
+    ΓêÜ Fee calculation should be efficient (28 ms)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Module Integration ΓÇ║ 
+All required models should be importable
+
+    expect(received).not.toThrow()
+
+    Error name:    "SyntaxError"
+    Error message: "C:\\SPtech Projects\\school management 
+project\\server\\models\\PromotionEngine.js: Unexpected token, 
+expected \"{\" (458:91)┬╖
+    [0m [90m 456 |[39m
+     [90m 457 |[39m [90m// Method to compare conduct 
+grades[39m
+    [31m[1m>[22m[39m[90m 458 |[39m promotionEngineSchema[3
+3m.[39mmethods[33m.[39mcompareConductGrades [33m=[39m 
+[36mfunction[39m (studentGrade[33m,[39m minimumGrade) 
+[33m=>[39m {
+     [90m     |[39m                                            
+                                                
+[31m[1m^[22m[39m
+     [90m 459 |[39m   [36mconst[39m gradeOrder [33m=[39m 
+[[32m\"Poor\"[39m[33m,[39m [32m\"Fair\"[39m[33m,[39m 
+[32m\"Good\"[39m[33m,[39m [32m\"Very Good\"[39m[33m,[39m 
+[32m\"Excellent\"[39m][33m;[39m
+     [90m 460 |[39m   [36mconst[39m studentIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(studentGrade)[33m;[39m
+     [90m 461 |[39m   [36mconst[39m minIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(minimumGrade)[33m;[39m[0m"
+
+        [0m [90m  8 |[39m       expect(() [33m=>[39m require
+([32m"../models/GhanaFeeStructure"[39m))[33m.[39mnot[33m.[3
+9mtoThrow()[33m;[39m
+         [90m  9 |[39m       expect(() [33m=>[39m require([3
+2m"../models/StudentLedger"[39m))[33m.[39mnot[33m.[39mtoThro
+w()[33m;[39m
+        [31m[1m>[22m[39m[90m 10 |[39m       expect(() 
+[33m=>[39m require([32m"../models/PromotionEngine"[39m))[33m
+.[39mnot[33m.[39mtoThrow()[33m;[39m
+         [90m    |[39m                    [31m[1m^[22m[39m
+         [90m 11 |[39m       expect(() [33m=>[39m require([3
+2m"../models/AuditLog"[39m))[33m.[39mnot[33m.[39mtoThrow()[
+33m;[39m
+         [90m 12 |[39m     })[33m;[39m
+         [90m 13 |[39m[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as unexpected] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at Parser.unexpected [as expect] 
+(../node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at Parser.expect [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1381:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as 
+parseFunctionBodyAndFinish] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2587:10)
+      at parseFunctionBodyAndFinish 
+(../node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at Parser.callback [as withSmartMixTopicForbiddingContext] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3168:14)
+      at Parser.withSmartMixTopicForbiddingContext [as 
+parseFunction] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at Parser.parseFunction [as parseFunctionOrFunctionSent] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1625:17)
+      at Parser.parseFunctionOrFunctionSent [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1189:21)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:345:25)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseModuleItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at Parser.parseModuleItem [as parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseProgram] 
+(../node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at Parser.parseProgram [as parseTopLevel] 
+(../node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at Parser.parseTopLevel [as parse] 
+(../node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at parse (../node_modules/@babel/parser/src/index.ts:86:38)
+      at parser 
+(../node_modules/@babel/core/src/parser/index.ts:29:19)
+                at parser.next (<anonymous>)
+      at normalizeFile (../node_modules/@babel/core/src/transform
+ation/normalize-file.ts:50:24)
+                at normalizeFile.next (<anonymous>)
+      at run 
+(../node_modules/@babel/core/src/transformation/index.ts:41:36)
+                at run.next (<anonymous>)
+      at transform 
+(../node_modules/@babel/core/src/transform.ts:29:20)
+                at transform.next (<anonymous>)
+      at evaluateSync (../node_modules/gensync/index.js:251:28)
+      at sync (../node_modules/gensync/index.js:89:14)
+      at fn (../node_modules/@babel/core/src/errors/rewrite-stack
+-trace.ts:99:14)
+      at transformSync 
+(../node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (../node_modules/@jest
+/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (../node_modu
+les/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../node_modules/@jest/trans
+form/build/ScriptTransformer.js:726:19)
+      at require (tests/systemWideSimple.test.js:10:20)
+      at Object.<anonymous> 
+(../node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] 
+(../node_modules/expect/build/index.js:320:21)
+      at Object.toThrow (tests/systemWideSimple.test.js:10:62)
+      at Object.toThrow (tests/systemWideSimple.test.js:10:62)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Module Integration ΓÇ║ 
+All required routes should be importable
+
+    expect(received).not.toThrow()
+
+    Error name:    "SyntaxError"
+    Error message: "C:\\SPtech Projects\\school management 
+project\\server\\models\\PromotionEngine.js: Unexpected token, 
+expected \"{\" (458:91)┬╖
+    [0m [90m 456 |[39m
+     [90m 457 |[39m [90m// Method to compare conduct 
+grades[39m
+    [31m[1m>[22m[39m[90m 458 |[39m promotionEngineSchema[3
+3m.[39mmethods[33m.[39mcompareConductGrades [33m=[39m 
+[36mfunction[39m (studentGrade[33m,[39m minimumGrade) 
+[33m=>[39m {
+     [90m     |[39m                                            
+                                                
+[31m[1m^[22m[39m
+     [90m 459 |[39m   [36mconst[39m gradeOrder [33m=[39m 
+[[32m\"Poor\"[39m[33m,[39m [32m\"Fair\"[39m[33m,[39m 
+[32m\"Good\"[39m[33m,[39m [32m\"Very Good\"[39m[33m,[39m 
+[32m\"Excellent\"[39m][33m;[39m
+     [90m 460 |[39m   [36mconst[39m studentIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(studentGrade)[33m;[39m
+     [90m 461 |[39m   [36mconst[39m minIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(minimumGrade)[33m;[39m[0m"
+
+        [0m [90m 1 |[39m [36mconst[39m express [33m=[39m 
+require([32m"express"[39m)[33m;[39m
+         [90m 2 |[39m [36mconst[39m { body[33m,[39m 
+validationResult } [33m=[39m 
+require([32m"express-validator"[39m)[33m;[39m
+        [31m[1m>[22m[39m[90m 3 |[39m [36mconst[39m 
+[33mPromotionEngine[39m [33m=[39m 
+require([32m"../models/PromotionEngine"[39m)[33m;[39m
+         [90m   |[39m                         
+[31m[1m^[22m[39m
+         [90m 4 |[39m [36mconst[39m [33mGhanaStudent[39m 
+[33m=[39m 
+require([32m"../models/GhanaStudent"[39m)[33m;[39m
+         [90m 5 |[39m [36mconst[39m [33mGhanaClass[39m 
+[33m=[39m require([32m"../models/GhanaClass"[39m)[33m;[39m
+         [90m 6 |[39m [36mconst[39m 
+[33mGhanaReportCard[39m [33m=[39m 
+require([32m"../models/GhanaReportCard"[39m)[33m;[39m[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as unexpected] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at Parser.unexpected [as expect] 
+(../node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at Parser.expect [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1381:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as 
+parseFunctionBodyAndFinish] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2587:10)
+      at parseFunctionBodyAndFinish 
+(../node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at Parser.callback [as withSmartMixTopicForbiddingContext] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3168:14)
+      at Parser.withSmartMixTopicForbiddingContext [as 
+parseFunction] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at Parser.parseFunction [as parseFunctionOrFunctionSent] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1625:17)
+      at Parser.parseFunctionOrFunctionSent [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1189:21)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:345:25)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseModuleItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at Parser.parseModuleItem [as parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseProgram] 
+(../node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at Parser.parseProgram [as parseTopLevel] 
+(../node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at Parser.parseTopLevel [as parse] 
+(../node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at parse (../node_modules/@babel/parser/src/index.ts:86:38)
+      at parser 
+(../node_modules/@babel/core/src/parser/index.ts:29:19)
+                at parser.next (<anonymous>)
+      at normalizeFile (../node_modules/@babel/core/src/transform
+ation/normalize-file.ts:50:24)
+                at normalizeFile.next (<anonymous>)
+      at run 
+(../node_modules/@babel/core/src/transformation/index.ts:41:36)
+                at run.next (<anonymous>)
+      at transform 
+(../node_modules/@babel/core/src/transform.ts:29:20)
+                at transform.next (<anonymous>)
+      at evaluateSync (../node_modules/gensync/index.js:251:28)
+      at sync (../node_modules/gensync/index.js:89:14)
+      at fn (../node_modules/@babel/core/src/errors/rewrite-stack
+-trace.ts:99:14)
+      at transformSync 
+(../node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (../node_modules/@jest
+/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (../node_modu
+les/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../node_modules/@jest/trans
+form/build/ScriptTransformer.js:726:19)
+      at Object.require (routes/promotionEngine.js:3:25)
+      at require (tests/systemWideSimple.test.js:19:20)
+      at Object.<anonymous> 
+(../node_modules/expect/build/toThrowMatchers.js:74:11)
+      at Object.throwingMatcher [as toThrow] 
+(../node_modules/expect/build/index.js:320:21)
+      at Object.toThrow (tests/systemWideSimple.test.js:19:62)
+      at Object.toThrow (tests/systemWideSimple.test.js:19:62)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Ghanaian Education 
+System Compliance ΓÇ║ Ghanaian grading system should be 
+implemented
+
+    expect(received).toHaveLength(expected)
+
+    Matcher error: received value must have a length property 
+whose value must be a number
+
+    Received has value: undefined
+
+    [0m [90m 57 |[39m       })[33m;[39m
+     [90m 58 |[39m
+    [31m[1m>[22m[39m[90m 59 |[39m       expect(gradingSyste
+m[33m.[39mgradingBands)[33m.[39mtoHaveLength([35m6[39m)[33
+m;[39m
+     [90m    |[39m                                          
+[31m[1m^[22m[39m
+     [90m 60 |[39m       expect(gradingSystem[33m.[39mgrading
+Bands[[35m0[39m][33m.[39mgrade)[33m.[39mtoBe([32m"A"[39m)
+[33m;[39m
+     [90m 61 |[39m       expect(gradingSystem[33m.[39mgrading
+Bands[[35m0[39m][33m.[39mgradePoint)[33m.[39mtoBe([35m4.0
+[39m)[33m;[39m
+     [90m 62 |[39m     })[33m;[39m[0m
+
+      at Object.toHaveLength 
+(tests/systemWideSimple.test.js:59:42)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Ghanaian Education 
+System Compliance ΓÇ║ Ghanaian term structure should be correct
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "First"
+    Received: undefined
+
+    [0m [90m 76 |[39m       
+expect(term[33m.[39mname)[33m.[39mtoBe([32m"First 
+Term"[39m)[33m;[39m
+     [90m 77 |[39m       expect(term[33m.[39morder)[33m.[39
+mtoBe([35m1[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 78 |[39m       expect(term[33m.[
+39mlegacySemester)[33m.[39mtoBe([32m"First"[39m)[33m;[39m
+     [90m    |[39m                                   
+[31m[1m^[22m[39m
+     [90m 79 |[39m     })[33m;[39m
+     [90m 80 |[39m   })[33m;[39m
+     [90m 81 |[39m[0m
+
+      at Object.toBe (tests/systemWideSimple.test.js:78:35)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Security and Compliance 
+ΓÇ║ Password strength validation should work correctly
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "at least 8 characters"
+    Received string:    "Password must contain at least one 
+uppercase letter"
+
+    [0m [90m 137 |[39m       expect(weakResult[33m.[39misVal
+id)[33m.[39mtoBe([36mfalse[39m)[33m;[39m
+     [90m 138 |[39m       expect(strongResult[33m.[39misValid
+)[33m.[39mtoBe([36mtrue[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 139 |[39m       expect(weakResult
+[33m.[39mmessage)[33m.[39mtoContain([32m"at least 8 
+characters"[39m)[33m;[39m
+     [90m     |[39m                                  
+[31m[1m^[22m[39m
+     [90m 140 |[39m     })[33m;[39m
+     [90m 141 |[39m   })[33m;[39m
+     [90m 142 |[39m[0m
+
+      at Object.toContain (tests/systemWideSimple.test.js:139:34)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Data Integrity ΓÇ║ 
+Report card calculations should be accurate
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "A"
+    Received: "F"
+
+    [0m [90m 164 |[39m
+     [90m 165 |[39m       expect(reportCard[33m.[39msubjects[
+[35m0[39m][33m.[39mtotalScore)[33m.[39mtoBe([35m90[39m)[
+33m;[39m
+    [31m[1m>[22m[39m[90m 166 |[39m       expect(reportCard
+[33m.[39msubjects[[35m0[39m][33m.[39mgrade)[33m.[39mtoBe(
+[32m"A"[39m)[33m;[39m
+     [90m     |[39m                                            
+[31m[1m^[22m[39m
+     [90m 167 |[39m       expect(reportCard[33m.[39msubjects[
+[35m0[39m][33m.[39mgradePoint)[33m.[39mtoBe([35m4.0[39m)
+[33m;[39m
+     [90m 168 |[39m     })[33m;[39m
+     [90m 169 |[39m[0m
+
+      at Object.toBe (tests/systemWideSimple.test.js:166:44)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Performance Optimization 
+ΓÇ║ Database indexes should be properly defined
+
+    SyntaxError: C:\SPtech Projects\school management 
+project\server\models\PromotionEngine.js: Unexpected token, 
+expected "{" (458:91)
+
+    [0m [90m 456 |[39m
+     [90m 457 |[39m [90m// Method to compare conduct 
+grades[39m
+    [31m[1m>[22m[39m[90m 458 |[39m promotionEngineSchema[3
+3m.[39mmethods[33m.[39mcompareConductGrades [33m=[39m 
+[36mfunction[39m (studentGrade[33m,[39m minimumGrade) 
+[33m=>[39m {
+     [90m     |[39m                                            
+                                                
+[31m[1m^[22m[39m
+     [90m 459 |[39m   [36mconst[39m gradeOrder [33m=[39m 
+[[32m"Poor"[39m[33m,[39m [32m"Fair"[39m[33m,[39m 
+[32m"Good"[39m[33m,[39m [32m"Very Good"[39m[33m,[39m 
+[32m"Excellent"[39m][33m;[39m
+     [90m 460 |[39m   [36mconst[39m studentIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(studentGrade)[33m;[39m
+     [90m 461 |[39m   [36mconst[39m minIndex [33m=[39m 
+gradeOrder[33m.[39mindexOf(minimumGrade)[33m;[39m[0m
+
+    [0m [90m 249 |[39m
+     [90m 250 |[39m       models[33m.[39mforEach(modelName 
+[33m=>[39m {
+    [31m[1m>[22m[39m[90m 251 |[39m         [36mconst[39m 
+[33mModel[39m [33m=[39m 
+require([32m`../models/${modelName}`[39m)[33m;[39m
+     [90m     |[39m                       [31m[1m^[22m[39m
+     [90m 252 |[39m         [36mconst[39m schema [33m=[39m 
+[33mModel[39m[33m.[39mschema[33m;[39m
+     [90m 253 |[39m         expect(schema[33m.[39mindexes)[3
+3m.[39mtoBeDefined()[33m;[39m
+     [90m 254 |[39m       })[33m;[39m[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as unexpected] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at Parser.unexpected [as expect] 
+(../node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at Parser.expect [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1381:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as 
+parseFunctionBodyAndFinish] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2587:10)
+      at parseFunctionBodyAndFinish 
+(../node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at Parser.callback [as withSmartMixTopicForbiddingContext] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3168:14)
+      at Parser.withSmartMixTopicForbiddingContext [as 
+parseFunction] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at Parser.parseFunction [as parseFunctionOrFunctionSent] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1625:17)
+      at Parser.parseFunctionOrFunctionSent [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1189:21)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:345:25)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseModuleItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at Parser.parseModuleItem [as parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseProgram] 
+(../node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at Parser.parseProgram [as parseTopLevel] 
+(../node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at Parser.parseTopLevel [as parse] 
+(../node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at parse (../node_modules/@babel/parser/src/index.ts:86:38)
+      at parser 
+(../node_modules/@babel/core/src/parser/index.ts:29:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (../node_modules/@babel/core/src/transform
+ation/normalize-file.ts:50:24)
+          at normalizeFile.next (<anonymous>)
+      at run 
+(../node_modules/@babel/core/src/transformation/index.ts:41:36)
+          at run.next (<anonymous>)
+      at transform 
+(../node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../node_modules/gensync/index.js:251:28)
+      at sync (../node_modules/gensync/index.js:89:14)
+      at fn (../node_modules/@babel/core/src/errors/rewrite-stack
+-trace.ts:99:14)
+      at transformSync 
+(../node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (../node_modules/@jest
+/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (../node_modu
+les/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../node_modules/@jest/trans
+form/build/ScriptTransformer.js:726:19)
+      at require (tests/systemWideSimple.test.js:251:23)
+          at Array.forEach (<anonymous>)
+      at Object.forEach (tests/systemWideSimple.test.js:250:14)
+
+  ΓùÅ System-Wide Integration Tests ΓÇ║ Data Relationships ΓÇ║ 
+Model relationships should be properly defined
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "GhanaStudent"
+    Received: [Function anonymous]
+
+    [0m [90m 310 |[39m
+     [90m 311 |[39m       [90m// Test that refs are properly 
+defined[39m
+    [31m[1m>[22m[39m[90m 312 |[39m       expect([33mGhanaR
+eportCard[39m[33m.[39mschema[33m.[39mpaths[33m.[39mstudent
+[33m.[39mref)[33m.[39mtoBe([32m"GhanaStudent"[39m)[33m;[3
+9m
+     [90m     |[39m                                            
+            [31m[1m^[22m[39m
+     [90m 313 |[39m       expect([33mGhanaReportCard[39m[33m
+.[39mschema[33m.[39mpaths[33m.[39m[36mclass[39m[33m.[39m
+ref)[33m.[39mtoBe([32m"GhanaClass"[39m)[33m;[39m
+     [90m 314 |[39m       expect([33mGhanaReportCard[39m[33m
+.[39mschema[33m.[39mpaths[33m.[39macademicYear[33m.[39mref
+)[33m.[39mtoBe([32m"AcademicYear"[39m)[33m;[39m
+     [90m 315 |[39m       expect([33mGhanaReportCard[39m[33m
+.[39mschema[33m.[39mpaths[33m.[39mterm[33m.[39mref)[33m.
+[39mtoBe([32m"Term"[39m)[33m;[39m[0m
+
+      at Object.toBe (tests/systemWideSimple.test.js:312:56)
+
+  ΓùÅ System Compliance Tests ΓÇ║ All modules should be Ghanaian 
+education compliant
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected value:    "First Term"
+    Received function: [Function anonymous]
+
+    [0m [90m 382 |[39m         [90m// Check if model has 
+Ghanaian-specific features[39m
+     [90m 383 |[39m         [36mif[39m (modelName 
+[33m===[39m [32m"GhanaReportCard"[39m) {
+    [31m[1m>[22m[39m[90m 384 |[39m           expect([33mMo
+del[39m[33m.[39mschema[33m.[39mpaths[33m.[39mtermName[33m
+.[39m[36menum[39m)[33m.[39mtoContain([32m"First 
+Term"[39m)[33m;[39m
+     [90m     |[39m                                            
+        [31m[1m^[22m[39m
+     [90m 385 |[39m           expect([33mModel[39m[33m.[39m
+schema[33m.[39mpaths[33m.[39mtermName[33m.[39m[36menum[39
+m)[33m.[39mtoContain([32m"Second Term"[39m)[33m;[39m
+     [90m 386 |[39m           expect([33mModel[39m[33m.[39m
+schema[33m.[39mpaths[33m.[39mtermName[33m.[39m[36menum[39
+m)[33m.[39mtoContain([32m"Third Term"[39m)[33m;[39m
+     [90m 387 |[39m         }[0m
+
+      at toContain (tests/systemWideSimple.test.js:384:52)
+          at Array.forEach (<anonymous>)
+      at Object.forEach (tests/systemWideSimple.test.js:379:14)
+
+  ΓùÅ System Compliance Tests ΓÇ║ Data retention policies should 
+be enforced
+
+    SyntaxError: C:\SPtech Projects\school management 
+project\server\models\AuditLog.js: Unexpected token, expected 
+"," (539:23)
+
+    [0m [90m 537 |[39m     [33m.[39msort({ 
+[32m"securityFlags.0.detectedAt"[39m[33m:[39m 
+[33m-[39m[35m1[39m })
+     [90m 538 |[39m     [33m.[39mlimit(limit)
+    [31m[1m>[22m[39m[90m 539 |[39m     
+[33m.[39mpopulate([32m"user', "[39mfirstName lastName 
+email[32m")[39m
+     [90m     |[39m                        [31m[1m^[22m[39m
+     [90m 540 |[39m     [33m.[39mselect([32m"action 
+resource resourceType ipAddress securityFlags 
+timestamp"[39m)[33m;[39m
+     [90m 541 |[39m
+     [90m 542 |[39m   [90m// Get top IP addresses by failed 
+attempts[39m[0m
+
+    [0m [90m 395 |[39m
+     [90m 396 |[39m   test([32m"Data retention policies 
+should be enforced"[39m[33m,[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 397 |[39m       [36mconst[39m 
+[33mAuditLog[39m [33m=[39m 
+require([32m"../models/AuditLog"[39m)[33m;[39m
+     [90m     |[39m                        [31m[1m^[22m[39m
+     [90m 398 |[39m       
+     [90m 399 |[39m       [36mconst[39m auditLog [33m=[39m 
+[36mnew[39m [33mAuditLog[39m({
+     [90m 400 |[39m         compliance[33m:[39m {[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as unexpected] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at Parser.unexpected [as expect] 
+(../node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at Parser.expect [as parseCallExpressionArguments] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1031:14)
+      at Parser.parseCallExpressionArguments [as 
+parseCoverCallAndAsyncArrowHead] 
+(../node_modules/@babel/parser/src/parser/expression.ts:922:29)
+      at Parser.parseCoverCallAndAsyncArrowHead [as 
+parseSubscript] 
+(../node_modules/@babel/parser/src/parser/expression.ts:804:19)
+      at Parser.parseSubscript [as parseSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:763:19)
+      at Parser.parseSubscripts [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:748:17)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseAwait] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2955:28)
+      at Parser.parseAwait [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:645:25)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseMaybeAssignAllowIn] 
+(../node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at Parser.parseMaybeAssignAllowIn [as parseVar] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1587:18)
+      at Parser.parseVar [as parseVarStatement] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1251:10)
+      at Parser.parseVarStatement [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:612:21)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseStatementListItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at Parser.parseStatementListItem [as 
+parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as 
+parseFunctionBodyAndFinish] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2587:10)
+      at parseFunctionBodyAndFinish 
+(../node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at Parser.callback [as withSmartMixTopicForbiddingContext] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3168:14)
+      at Parser.withSmartMixTopicForbiddingContext [as 
+parseFunction] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at Parser.parseFunction [as parseAsyncFunctionExpression] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1646:17)
+      at Parser.parseAsyncFunctionExpression [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1315:27)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:345:25)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseModuleItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at Parser.parseModuleItem [as parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseProgram] 
+(../node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at Parser.parseProgram [as parseTopLevel] 
+(../node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at Parser.parseTopLevel [as parse] 
+(../node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at parse (../node_modules/@babel/parser/src/index.ts:86:38)
+      at parser 
+(../node_modules/@babel/core/src/parser/index.ts:29:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (../node_modules/@babel/core/src/transform
+ation/normalize-file.ts:50:24)
+          at normalizeFile.next (<anonymous>)
+      at run 
+(../node_modules/@babel/core/src/transformation/index.ts:41:36)
+          at run.next (<anonymous>)
+      at transform 
+(../node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../node_modules/gensync/index.js:251:28)
+      at sync (../node_modules/gensync/index.js:89:14)
+      at fn (../node_modules/@babel/core/src/errors/rewrite-stack
+-trace.ts:99:14)
+      at transformSync 
+(../node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (../node_modules/@jest
+/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (../node_modu
+les/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../node_modules/@jest/trans
+form/build/ScriptTransformer.js:726:19)
+      at Object.require (tests/systemWideSimple.test.js:397:24)
+
+  ΓùÅ System Compliance Tests ΓÇ║ Audit logging should capture 
+all critical events
+
+    SyntaxError: C:\SPtech Projects\school management 
+project\server\models\AuditLog.js: Unexpected token, expected 
+"," (539:23)
+
+    [0m [90m 537 |[39m     [33m.[39msort({ 
+[32m"securityFlags.0.detectedAt"[39m[33m:[39m 
+[33m-[39m[35m1[39m })
+     [90m 538 |[39m     [33m.[39mlimit(limit)
+    [31m[1m>[22m[39m[90m 539 |[39m     
+[33m.[39mpopulate([32m"user', "[39mfirstName lastName 
+email[32m")[39m
+     [90m     |[39m                        [31m[1m^[22m[39m
+     [90m 540 |[39m     [33m.[39mselect([32m"action 
+resource resourceType ipAddress securityFlags 
+timestamp"[39m)[33m;[39m
+     [90m 541 |[39m
+     [90m 542 |[39m   [90m// Get top IP addresses by failed 
+attempts[39m[0m
+
+    [0m [90m 409 |[39m
+     [90m 410 |[39m   test([32m"Audit logging should capture 
+all critical events"[39m[33m,[39m () [33m=>[39m {
+    [31m[1m>[22m[39m[90m 411 |[39m       [36mconst[39m 
+[33mAuditLog[39m [33m=[39m 
+require([32m"../models/AuditLog"[39m)[33m;[39m
+     [90m     |[39m                        [31m[1m^[22m[39m
+     [90m 412 |[39m       
+     [90m 413 |[39m       [36mconst[39m criticalEvents 
+[33m=[39m [
+     [90m 414 |[39m         [32m"LOGIN"[39m[33m,[39m 
+[32m"LOGOUT"[39m[33m,[39m [32m"DELETE"[39m[33m,[39m 
+[32m"SECURITY_VIOLATION"[39m[33m,[39m[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as unexpected] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1544:16)
+      at Parser.unexpected [as expect] 
+(../node_modules/@babel/parser/src/parser/util.ts:157:12)
+      at Parser.expect [as parseCallExpressionArguments] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1031:14)
+      at Parser.parseCallExpressionArguments [as 
+parseCoverCallAndAsyncArrowHead] 
+(../node_modules/@babel/parser/src/parser/expression.ts:922:29)
+      at Parser.parseCoverCallAndAsyncArrowHead [as 
+parseSubscript] 
+(../node_modules/@babel/parser/src/parser/expression.ts:804:19)
+      at Parser.parseSubscript [as parseSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:763:19)
+      at Parser.parseSubscripts [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:748:17)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseAwait] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2955:28)
+      at Parser.parseAwait [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:645:25)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseMaybeAssignAllowIn] 
+(../node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at Parser.parseMaybeAssignAllowIn [as parseVar] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1587:18)
+      at Parser.parseVar [as parseVarStatement] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1251:10)
+      at Parser.parseVarStatement [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:612:21)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseStatementListItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at Parser.parseStatementListItem [as 
+parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as 
+parseFunctionBodyAndFinish] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2587:10)
+      at parseFunctionBodyAndFinish 
+(../node_modules/@babel/parser/src/parser/statement.ts:1695:12)
+      at Parser.callback [as withSmartMixTopicForbiddingContext] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3168:14)
+      at Parser.withSmartMixTopicForbiddingContext [as 
+parseFunction] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1693:10)
+      at Parser.parseFunction [as parseAsyncFunctionExpression] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1646:17)
+      at Parser.parseAsyncFunctionExpression [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1315:27)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:345:25)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseModuleItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:419:17)
+      at Parser.parseModuleItem [as parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1443:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseProgram] 
+(../node_modules/@babel/parser/src/parser/statement.ts:229:10)
+      at Parser.parseProgram [as parseTopLevel] 
+(../node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at Parser.parseTopLevel [as parse] 
+(../node_modules/@babel/parser/src/parser/index.ts:83:25)
+      at parse (../node_modules/@babel/parser/src/index.ts:86:38)
+      at parser 
+(../node_modules/@babel/core/src/parser/index.ts:29:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (../node_modules/@babel/core/src/transform
+ation/normalize-file.ts:50:24)
+          at normalizeFile.next (<anonymous>)
+      at run 
+(../node_modules/@babel/core/src/transformation/index.ts:41:36)
+          at run.next (<anonymous>)
+      at transform 
+(../node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (../node_modules/gensync/index.js:251:28)
+      at sync (../node_modules/gensync/index.js:89:14)
+      at fn (../node_modules/@babel/core/src/errors/rewrite-stack
+-trace.ts:99:14)
+      at transformSync 
+(../node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (../node_modules/@jest
+/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (../node_modu
+les/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (../node_modules/@jest/trans
+form/build/ScriptTransformer.js:726:19)
+      at Object.require (tests/systemWideSimple.test.js:411:24)
+
+  ΓùÅ Performance Benchmarks ΓÇ║ Report card generation should 
+be fast
+
+    ValidationError: GhanaReportCard validation failed: 
+generatedBy: Path `generatedBy` is required., termName: Path 
+`termName` is required., class: Path `class` is required., term: 
+Path `term` is required., academicYear: Path `academicYear` is 
+required., student: Path `student` is required., 
+subjects.0.subjectCode: Path `subjectCode` is required., 
+subjects.0.subject: Path `subject` is required., 
+subjects.1.subjectCode: Path `subjectCode` is required., 
+subjects.1.subject: Path `subject` is required., 
+subjects.2.subjectCode: Path `subjectCode` is required., 
+subjects.2.subject: Path `subject` is required., 
+subjects.3.subjectCode: Path `subjectCode` is required., 
+subjects.3.subject: Path `subject` is required., 
+subjects.4.subjectCode: Path `subjectCode` is required., 
+subjects.4.subject: Path `subject` is required., 
+subjects.5.subjectCode: Path `subjectCode` is required., 
+subjects.5.subject: Path `subject` is required., 
+subjects.6.subjectCode: Path `subjectCode` is required., 
+subjects.6.subject: Path `subject` is required., 
+subjects.7.subjectCode: Path `subjectCode` is required., 
+subjects.7.subject: Path `subject` is required., 
+subjects.8.subjectCode: Path `subjectCode` is required., 
+subjects.8.subject: Path `subject` is required., 
+subjects.9.subjectCode: Path `subjectCode` is required., 
+subjects.9.subject: Path `subject` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+FAIL tests/schoolSetup.test.js
+  School Setup Module
+    School Configuration
+      ├ù POST /api/school-setup/config - should create school 
+configuration (379 ms)
+      ├ù GET /api/school-setup/config - should get school 
+configuration (67 ms)
+      ├ù POST /api/school-setup/config - should validate 
+required fields (66 ms)
+    Grading System
+      ├ù POST /api/school-setup/grading-systems/ghanaian - 
+should create Ghanaian grading system (65 ms)
+      ├ù GET /api/school-setup/grading-systems - should get all 
+grading systems (64 ms)
+      ├ù POST /api/school-setup/grading-systems/ghanaian - 
+should prevent duplicate creation (62 ms)
+    Class Structure
+      ├ù GET /api/school-setup/class-levels - should get 
+Ghanaian class levels (65 ms)
+      ├ù POST /api/school-setup/classes/create-all - should 
+create all classes (66 ms)
+      ├ù POST /api/school-setup/classes - should create single 
+class (69 ms)
+      ├ù GET /api/school-setup/classes - should get classes with 
+filters (65 ms)
+      ├ù POST /api/school-setup/classes - should validate class 
+data (72 ms)
+    Subject Management
+      ├ù GET /api/school-setup/subjects/curriculum - should get 
+Ghanaian curriculum (69 ms)
+      ├ù POST /api/school-setup/subjects/create-all - should 
+create subjects for all levels (67 ms)
+      ├ù GET /api/school-setup/subjects - should get subjects 
+with filters (66 ms)
+    Role-Based Access Control
+      ├ù Teacher should not access school configuration (65 ms)
+      ├ù Teacher should not create grading systems (65 ms)
+      ├ù Teacher should not create classes (56 ms)
+      ├ù Teacher can view class levels and curriculum (58 ms)
+    Data Validation
+      ├ù Should validate academic year format (57 ms)
+      ├ù Should validate email format in school config (56 ms)
+      ├ù Should validate class capacity limits (59 ms)
+
+  ΓùÅ School Setup Module ΓÇ║ School Configuration ΓÇ║ POST 
+/api/school-setup/config - should create school configuration
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ School Configuration ΓÇ║ GET 
+/api/school-setup/config - should get school configuration
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ School Configuration ΓÇ║ POST 
+/api/school-setup/config - should validate required fields
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Grading System ΓÇ║ POST 
+/api/school-setup/grading-systems/ghanaian - should create 
+Ghanaian grading system
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Grading System ΓÇ║ GET 
+/api/school-setup/grading-systems - should get all grading 
+systems
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Grading System ΓÇ║ POST 
+/api/school-setup/grading-systems/ghanaian - should prevent 
+duplicate creation
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Class Structure ΓÇ║ GET 
+/api/school-setup/class-levels - should get Ghanaian class levels
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Class Structure ΓÇ║ POST 
+/api/school-setup/classes/create-all - should create all classes
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Class Structure ΓÇ║ POST 
+/api/school-setup/classes - should create single class
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Class Structure ΓÇ║ GET 
+/api/school-setup/classes - should get classes with filters
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Class Structure ΓÇ║ POST 
+/api/school-setup/classes - should validate class data
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Subject Management ΓÇ║ GET 
+/api/school-setup/subjects/curriculum - should get Ghanaian 
+curriculum
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Subject Management ΓÇ║ POST 
+/api/school-setup/subjects/create-all - should create subjects 
+for all levels
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Subject Management ΓÇ║ GET 
+/api/school-setup/subjects - should get subjects with filters
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Role-Based Access Control ΓÇ║ 
+Teacher should not access school configuration
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Role-Based Access Control ΓÇ║ 
+Teacher should not create grading systems
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Role-Based Access Control ΓÇ║ 
+Teacher should not create classes
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Role-Based Access Control ΓÇ║ 
+Teacher can view class levels and curriculum
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Data Validation ΓÇ║ Should 
+validate academic year format
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Data Validation ΓÇ║ Should 
+validate email format in school config
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ School Setup Module ΓÇ║ Data Validation ΓÇ║ Should 
+validate class capacity limits
+
+    ValidationError: User validation failed: name: Name is 
+required
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+2026-03-16 09:32:30:3230 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:30:3230 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:30 +0000] "POST /api/grades HTTP/1.1" 201 549 "-" "-"[39m 
+2026-03-16 09:32:30:3230 [[33mwarn[39m]: [33mAuthentication attempt without token[39m {
+  "ip": "::ffff:127.0.0.1",
+  "url": "/"
+}
+2026-03-16 09:32:30:3230 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:30 +0000] "POST /api/grades HTTP/1.1" 401 109 "-" "-"[39m 
+2026-03-16 09:32:30:3230 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d923",
+  "role": "student",
+  "url": "/"
+}
+2026-03-16 09:32:30:3230 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:30 +0000] "POST /api/grades HTTP/1.1" 403 126 "-" "-"[39m 
+2026-03-16 09:32:30:3230 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/?academicYearId=69b7ce2ec8bf7e1cfb37d946&termId=69b7ce2ec8bf7e1cfb37d948"
+}
+2026-03-16 09:32:30:3230 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:30 +0000] "GET /api/grades?academicYearId=69b7ce2ec8bf7e1cfb37d946&termId=69b7ce2ec8bf7e1cfb37d948 HTTP/1.1" 200 2 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/student/69b7ce2ec8bf7e1cfb37d976"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "GET /api/grades/student/69b7ce2ec8bf7e1cfb37d976 HTTP/1.1" 200 2 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "POST /api/grades HTTP/1.1" 201 535 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/69b7ce2fc8bf7e1cfb37d9b9"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "PUT /api/grades/69b7ce2fc8bf7e1cfb37d9b9 HTTP/1.1" 200 548 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "POST /api/grades HTTP/1.1" 201 514 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/69b7ce2fc8bf7e1cfb37d9f7"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "DELETE /api/grades/69b7ce2fc8bf7e1cfb37d9f7 HTTP/1.1" 200 40 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "POST /api/grades HTTP/1.1" 400 355 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "POST /api/grades HTTP/1.1" 400 116 "-" "-"[39m 
+2026-03-16 09:32:31:3231 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ce2ec8bf7e1cfb37d806",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:32:31:3231 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:31 +0000] "POST /api/grades HTTP/1.1" 400 108 "-" "-"[39m 
+PASS tests/grades.test.js
+  Grades Service
+    Grade CRUD Operations
+      ΓêÜ should create new grade with teacher token (589 ms)
+      ΓêÜ should reject grade creation without authentication 
+(133 ms)
+      ΓêÜ should reject grade creation with insufficient 
+permissions (88 ms)
+      ΓêÜ should get all grades with teacher token (104 ms)
+      ΓêÜ should get grades by student ID (96 ms)
+      ΓêÜ should update grade with teacher token (158 ms)
+      ΓêÜ should delete grade with teacher token (152 ms)
+    Grade Validation
+      ΓêÜ should reject grade creation with missing required 
+fields (114 ms)
+      ΓêÜ should reject grade creation with invalid score (99 ms)
+      ΓêÜ should reject grade creation with invalid grade (78 ms)
+    Report Card Generation
+      Γùï skipped should generate report card for student
+      Γùï skipped should calculate GPA in report card
+      Γùï skipped should include grade distribution in summary
+      Γùï skipped should include attendance in report card
+    Report Card Export
+      Γùï skipped should export report card as PDF
+      Γùï skipped should export report card as Excel
+      Γùï skipped should export report card as CSV
+      Γùï skipped should include student information in export
+      Γùï skipped should include school information in export
+    Grade Analytics
+      Γùï skipped should calculate grade distribution
+      Γùï skipped should calculate subject performance
+      Γùï skipped should calculate class ranking
+      Γùï skipped should generate grade trends report
+
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 404 27 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[33mwarn[39m]: [33mAuthentication attempt without token[39m {
+  "ip": "::ffff:127.0.0.1",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 401 109 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "GET /api/fees HTTP/1.1" 200 52 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/student/69b7ce318de80639577c40eb"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "GET /api/fees/student/69b7ce318de80639577c40eb HTTP/1.1" 200 2 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 400 103 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/undefined"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "PUT /api/fees/undefined HTTP/1.1" 404 23 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 400 184 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/undefined"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "DELETE /api/fees/undefined HTTP/1.1" 404 23 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 400 276 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 400 208 "-" "-"[39m 
+2026-03-16 09:32:33:3233 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/"
+}
+2026-03-16 09:32:33:3233 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:33 +0000] "POST /api/fees HTTP/1.1" 400 207 "-" "-"[39m 
+FAIL tests/fees.test.js
+  Fees Service
+    Fee CRUD Operations
+      ├ù should create new fee with admin token (258 ms)
+      ΓêÜ should reject fee creation without authentication (64 
+ms)
+      ├ù should reject fee creation with insufficient 
+permissions (50 ms)
+      ├ù should get all fees with admin token (69 ms)
+      ΓêÜ should get fees by student ID (59 ms)
+      ├ù should update fee with admin token (90 ms)
+      ├ù should delete fee with admin token (69 ms)
+    Fee Validation
+      ΓêÜ should reject fee creation with missing required 
+fields (55 ms)
+      ΓêÜ should reject fee creation with invalid amount (56 ms)
+      ΓêÜ should reject fee creation with invalid due date (57 
+ms)
+    Fee Reports and Analytics
+      ├ù should get fee summary for student (56 ms)
+      ├ù should get fee report by academic year (49 ms)
+      ├ù should get fee report by term (50 ms)
+      ├ù should get overdue fees report (47 ms)
+      ├ù should filter fees by status (48 ms)
+      ├ù should filter fees by type (48 ms)
+
+  ΓùÅ Fees Service ΓÇ║ Fee CRUD Operations ΓÇ║ should create new 
+fee with admin token
+
+    expected 201 "Created", got 404 "Not Found"
+
+    [0m [90m 77 |[39m         
+[33m.[39m[36mset[39m([32m'Authorization'[39m[33m,[39m 
+[32m`Bearer ${adminToken}`[39m)
+     [90m 78 |[39m         [33m.[39msend(feeData)
+    [31m[1m>[22m[39m[90m 79 |[39m         
+[33m.[39mexpect([35m201[39m)[33m;[39m
+     [90m    |[39m          [31m[1m^[22m[39m
+     [90m 80 |[39m
+     [90m 81 |[39m       expect(response[33m.[39mbody)[33m.
+[39mtoHaveProperty([32m'feeType'[39m[33m,[39m 
+[32m'tuition'[39m)[33m;[39m
+     [90m 82 |[39m       expect(response[33m.[39mbody)[33m.
+[39mtoHaveProperty([32m'amount'[39m[33m,[39m 
+[35m1000[39m)[33m;[39m[0m
+
+      at Object.expect (tests/fees.test.js:79:10)
+      ----
+      at Test._assertStatus 
+(../node_modules/supertest/lib/test.js:252:14)
+      at ../node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction 
+(../node_modules/supertest/lib/test.js:285:13)
+      at Test.assert 
+(../node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert 
+(../node_modules/supertest/lib/test.js:120:14)
+
+  ΓùÅ Fees Service ΓÇ║ Fee CRUD Operations ΓÇ║ should reject fee 
+creation with insufficient permissions
+
+    ReferenceError: jwt is not defined
+
+    [0m [90m 100 |[39m
+     [90m 101 |[39m     test([32m'should reject fee creation 
+with insufficient permissions'[39m[33m,[39m [36masync[39m 
+() [33m=>[39m {
+    [31m[1m>[22m[39m[90m 102 |[39m       [36mconst[39m 
+studentToken [33m=[39m jwt[33m.[39msign(
+     [90m     |[39m                            
+[31m[1m^[22m[39m
+     [90m 103 |[39m         {
+     [90m 104 |[39m           userId[33m:[39m 
+[32m'student-user-id'[39m[33m,[39m
+     [90m 105 |[39m           role[33m:[39m 
+[32m'student'[39m[33m,[39m[0m
+
+      at Object.jwt (tests/fees.test.js:102:28)
+
+  ΓùÅ Fees Service ΓÇ║ Fee CRUD Operations ΓÇ║ should get all 
+fees with admin token
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+    [0m [90m 134 |[39m         
+[33m.[39mexpect([35m200[39m)[33m;[39m
+     [90m 135 |[39m
+    [31m[1m>[22m[39m[90m 136 |[39m       expect([33mArray
+[39m[33m.[39misArray(response[33m.[39mbody))[33m.[39mtoBe(
+[36mtrue[39m)[33m;[39m
+     [90m     |[39m                                            
+[31m[1m^[22m[39m
+     [90m 137 |[39m     })[33m;[39m
+     [90m 138 |[39m
+     [90m 139 |[39m     test([32m'should get fees by student 
+ID'[39m[33m,[39m [36masync[39m () [33m=>[39m {[0m
+
+      at Object.toBe (tests/fees.test.js:136:44)
+
+  ΓùÅ Fees Service ΓÇ║ Fee CRUD Operations ΓÇ║ should update fee 
+with admin token
+
+    expected 200 "OK", got 404 "Not Found"
+
+    [0m [90m 169 |[39m         
+[33m.[39m[36mset[39m([32m'Authorization'[39m[33m,[39m 
+[32m`Bearer ${adminToken}`[39m)
+     [90m 170 |[39m         [33m.[39msend(updateData)
+    [31m[1m>[22m[39m[90m 171 |[39m         
+[33m.[39mexpect([35m200[39m)[33m;[39m
+     [90m     |[39m          [31m[1m^[22m[39m
+     [90m 172 |[39m
+     [90m 173 |[39m       expect(response[33m.[39mbody)[33m.
+[39mtoHaveProperty([32m'amount'[39m[33m,[39m 
+[35m1200[39m)[33m;[39m
+     [90m 174 |[39m       expect(response[33m.[39mbody)[33m.
+[39mtoHaveProperty([32m'description'[39m[33m,[39m 
+[32m'Updated tuition fee'[39m)[33m;[39m[0m
+
+      at Object.expect (tests/fees.test.js:171:10)
+      ----
+      at Test._assertStatus 
+(../node_modules/supertest/lib/test.js:252:14)
+      at ../node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction 
+(../node_modules/supertest/lib/test.js:285:13)
+      at Test.assert 
+(../node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert 
+(../node_modules/supertest/lib/test.js:120:14)
+
+  ΓùÅ Fees Service ΓÇ║ Fee CRUD Operations ΓÇ║ should delete fee 
+with admin token
+
+    expected 200 "OK", got 404 "Not Found"
+
+    [0m [90m 191 |[39m         
+[33m.[39m[36mdelete[39m([32m`/api/fees/${feeId}`[39m)
+     [90m 192 |[39m         
+[33m.[39m[36mset[39m([32m'Authorization'[39m[33m,[39m 
+[32m`Bearer ${adminToken}`[39m)
+    [31m[1m>[22m[39m[90m 193 |[39m         
+[33m.[39mexpect([35m200[39m)[33m;[39m
+     [90m     |[39m          [31m[1m^[22m[39m
+     [90m 194 |[39m
+     [90m 195 |[39m       expect(response[33m.[39mbody)[33m.
+[39mtoHaveProperty([32m'message'[39m)[33m;[39m
+     [90m 196 |[39m     })[33m;[39m[0m
+
+      at Object.expect (tests/fees.test.js:193:10)
+      ----
+      at Test._assertStatus 
+(../node_modules/supertest/lib/test.js:252:14)
+      at ../node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction 
+(../node_modules/supertest/lib/test.js:285:13)
+      at Test.assert 
+(../node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert 
+(../node_modules/supertest/lib/test.js:120:14)
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should get 
+fee summary for student
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should get 
+fee report by academic year
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should get 
+fee report by term
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should get 
+overdue fees report
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should 
+filter fees by status
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Fees Service ΓÇ║ Fee Reports and Analytics ΓÇ║ should 
+filter fees by type
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+FAIL tests/payments.test.js
+  Payments Service
+    Payment CRUD Operations
+      ├ù should create new payment with staff token (1 ms)
+      ├ù should reject payment creation without authentication
+      ├ù should reject payment creation with insufficient 
+permissions (1 ms)
+      ├ù should get all payments with admin token
+      ├ù should get payments by student ID
+      ├ù should update payment status with staff token
+      ├ù should refund payment with admin token (1 ms)
+    Payment Validation
+      ├ù should reject payment creation with missing required 
+fields
+      ├ù should reject payment creation with invalid amount
+      ├ù should reject payment creation with invalid payment 
+method
+      ├ù should reject payment for non-existent fee
+    Payment Receipt Generation
+      ├ù should generate payment receipt
+      ├ù should generate receipt in PDF format
+      ├ù should generate receipt in HTML format (1 ms)
+      ├ù should include all required receipt information
+      ├ù should generate receipt with school branding
+    Payment Reports and Analytics
+      ├ù should get payment summary by date range
+      ├ù should get payments by method
+      ├ù should get payments by status
+      ├ù should generate daily collection report
+      ├ù should generate monthly collection report
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+create new payment with staff token
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+reject payment creation without authentication
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+reject payment creation with insufficient permissions
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+get all payments with admin token
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+get payments by student ID
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+update payment status with staff token
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment CRUD Operations ΓÇ║ should 
+refund payment with admin token
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Validation ΓÇ║ should reject 
+payment creation with missing required fields
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Validation ΓÇ║ should reject 
+payment creation with invalid amount
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Validation ΓÇ║ should reject 
+payment creation with invalid payment method
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Validation ΓÇ║ should reject 
+payment for non-existent fee
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Receipt Generation ΓÇ║ should 
+generate payment receipt
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Receipt Generation ΓÇ║ should 
+generate receipt in PDF format
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Receipt Generation ΓÇ║ should 
+generate receipt in HTML format
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Receipt Generation ΓÇ║ should 
+include all required receipt information
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Receipt Generation ΓÇ║ should 
+generate receipt with school branding
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Reports and Analytics ΓÇ║ 
+should get payment summary by date range
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Reports and Analytics ΓÇ║ 
+should get payments by method
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Reports and Analytics ΓÇ║ 
+should get payments by status
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Reports and Analytics ΓÇ║ 
+should generate daily collection report
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Payments Service ΓÇ║ Payment Reports and Analytics ΓÇ║ 
+should generate monthly collection report
+
+    ValidationError: Fee validation failed: createdBy: Path 
+`createdBy` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+FAIL tests/attendance.test.js
+  Attendance Service
+    Attendance CRUD Operations
+      ├ù should mark attendance with teacher token
+      ├ù should reject attendance marking without authentication
+      ├ù should reject attendance marking with insufficient 
+permissions
+      ├ù should get attendance records with teacher token (1 ms)
+      ├ù should get attendance by student ID
+      ├ù should get attendance by class ID
+    Attendance Validation
+      ├ù should reject attendance marking with missing required 
+fields
+      ├ù should reject attendance marking with invalid status
+      ├ù should reject attendance marking for non-existent 
+student
+    Attendance Reports
+      ├ù should generate attendance report for student
+      ├ù should generate attendance report for class
+      ├ù should calculate attendance statistics
+      ├ù should filter attendance by date range
+      ├ù should filter attendance by status
+    Bulk Attendance Operations
+      ├ù should mark bulk attendance for class
+      ├ù should handle bulk attendance with mixed results
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should mark attendance with teacher token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should reject attendance marking without authentication
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should reject attendance marking with insufficient permissions
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should get attendance records with teacher token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should get attendance by student ID
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance CRUD Operations ΓÇ║ 
+should get attendance by class ID
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Validation ΓÇ║ should 
+reject attendance marking with missing required fields
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Validation ΓÇ║ should 
+reject attendance marking with invalid status
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Validation ΓÇ║ should 
+reject attendance marking for non-existent student
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Reports ΓÇ║ should 
+generate attendance report for student
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Reports ΓÇ║ should 
+generate attendance report for class
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Reports ΓÇ║ should 
+calculate attendance statistics
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Reports ΓÇ║ should 
+filter attendance by date range
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Attendance Reports ΓÇ║ should 
+filter attendance by status
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Bulk Attendance Operations ΓÇ║ 
+should mark bulk attendance for class
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Attendance Service ΓÇ║ Bulk Attendance Operations ΓÇ║ 
+should handle bulk attendance with mixed results
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+FAIL tests/students.test.js
+  Students Service
+    Student CRUD Operations
+      ├ù should create new student with admin token (1 ms)
+      ├ù should reject student creation without authentication
+      ├ù should reject student creation with insufficient 
+permissions
+      ├ù should get all students with admin token
+      ├ù should get student by ID with admin token
+      ├ù should update student with admin token
+      ├ù should delete student with admin token
+    Student Validation
+      ├ù should reject student creation with missing required 
+fields
+      ├ù should reject student creation with invalid email
+      ├ù should reject student creation with invalid date of 
+birth
+    Student Search and Filtering
+      ├ù should filter students by status
+      ├ù should filter students by class
+      ├ù should search students by name
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+create new student with admin token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+reject student creation without authentication
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+reject student creation with insufficient permissions
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+get all students with admin token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+get student by ID with admin token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+update student with admin token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student CRUD Operations ΓÇ║ should 
+delete student with admin token
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Validation ΓÇ║ should reject 
+student creation with missing required fields
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Validation ΓÇ║ should reject 
+student creation with invalid email
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Validation ΓÇ║ should reject 
+student creation with invalid date of birth
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Search and Filtering ΓÇ║ 
+should filter students by status
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Search and Filtering ΓÇ║ 
+should filter students by class
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+  ΓùÅ Students Service ΓÇ║ Student Search and Filtering ΓÇ║ 
+should search students by name
+
+    ValidationError: Class validation failed: teacher: Path 
+`teacher` is required., section: Path `section` is required.
+
+      at model.Object.<anonymous>.Document.invalidate 
+(../node_modules/mongoose/lib/document.js:3221:32)
+      at ../node_modules/mongoose/lib/document.js:3014:17
+      at ../node_modules/mongoose/lib/schematype.js:1368:9
+
+FAIL tests/studentManagement.test.js
+  Student Management Unit Tests
+    GhanaStudent Model
+      ├ù Should generate valid student ID (57 ms)
+      ├ù Should generate valid admission number (23 ms)
+      ΓêÜ Should calculate age correctly (13 ms)
+      ΓêÜ Should validate Ghanaian regions (14 ms)
+    Student Admission Workflow
+      ΓêÜ Should validate required fields for admission (18 ms)
+      ΓêÜ Should validate age appropriateness for class (9 ms)
+      ΓêÜ Should handle guardian information (11 ms)
+      ΓêÜ Should handle Ghanaian identification documents (11 ms)
+    Student Promotion System
+      ΓêÜ Should promote student to next class (11 ms)
+      ΓêÜ Should track academic history (9 ms)
+    Student Profile Management
+      ΓêÜ Should handle comprehensive student profile (15 ms)
+      ΓêÜ Should handle special needs information (9 ms)
+    Data Validation
+      ΓêÜ Should validate Ghanaian phone numbers (10 ms)
+      ΓêÜ Should validate Ghana card format (9 ms)
+      ΓêÜ Should validate NHIS format (8 ms)
+    Ghanaian Education Compliance
+      ΓêÜ Should follow Ghanaian education structure (9 ms)
+      ΓêÜ Should have appropriate age ranges for each level (9 
+ms)
+      ΓêÜ Should support Ghanaian curriculum subjects (10 ms)
+
+  ΓùÅ Student Management Unit Tests ΓÇ║ GhanaStudent Model ΓÇ║ 
+Should generate valid student ID
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "EDU20260001"
+    Received: undefined
+
+    [0m [90m 33 |[39m       [36mconst[39m expectedId 
+[33m=[39m [32m`EDU${year}0001`[39m[33m;[39m
+     [90m 34 |[39m       
+    [31m[1m>[22m[39m[90m 35 |[39m       expect(student[33m
+.[39mstudentId)[33m.[39mtoBe(expectedId)[33m;[39m
+     [90m    |[39m                                 
+[31m[1m^[22m[39m
+     [90m 36 |[39m       expect(student[33m.[39mstudentId)[3
+3m.[39mtoMatch([35m/^EDU\d{8}$/[39m)[33m;[39m
+     [90m 37 |[39m     })[33m;[39m
+     [90m 38 |[39m[0m
+
+      at Object.toBe (tests/studentManagement.test.js:35:33)
+
+  ΓùÅ Student Management Unit Tests ΓÇ║ GhanaStudent Model ΓÇ║ 
+Should generate valid admission number
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: "ADM2026030001"
+    Received: undefined
+
+    [0m [90m 64 |[39m       [36mconst[39m expectedNumber 
+[33m=[39m [32m`ADM${year}${month}0001`[39m[33m;[39m
+     [90m 65 |[39m       
+    [31m[1m>[22m[39m[90m 66 |[39m       expect(student[33m
+.[39madmissionNumber)[33m.[39mtoBe(expectedNumber)[33m;[39m
+     [90m    |[39m                                       
+[31m[1m^[22m[39m
+     [90m 67 |[39m       expect(student[33m.[39madmissionNumb
+er)[33m.[39mtoMatch([35m/^ADM\d{8}$/[39m)[33m;[39m
+     [90m 68 |[39m     })[33m;[39m
+     [90m 69 |[39m[0m
+
+      at Object.toBe (tests/studentManagement.test.js:66:39)
+
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "test-user-id",
+  "role": "admin",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mProfile accessed[39m {
+  "userId": "test-user-id"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 200 36 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[33mwarn[39m]: [33mAuthentication attempt without token[39m {
+  "ip": "::ffff:127.0.0.1",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 401 109 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[31merror[39m]: [31mAuthentication error[39m {
+  "error": "invalid token",
+  "ip": "::ffff:127.0.0.1",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 401 90 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[31merror[39m]: [31mAuthentication error[39m {
+  "error": "jwt expired",
+  "ip": "::ffff:127.0.0.1",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 401 94 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "test-user-id",
+  "role": "admin",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mProfile accessed[39m {
+  "userId": "test-user-id"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 200 36 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 401 104 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "admin-user-id",
+  "role": "admin",
+  "url": "/logs"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/audit/logs HTTP/1.1" 404 127 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "student-user-id",
+  "role": "student",
+  "url": "/logs"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/audit/logs HTTP/1.1" 403 126 "-" "-"[39m 
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "test-user-id",
+  "role": "admin",
+  "url": "/profile"
+}
+2026-03-16 09:32:43:3243 [[34mdebug[39m]: [34mProfile accessed[39m {
+  "userId": "test-user-id"
+}
+2026-03-16 09:32:43:3243 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:32:43 +0000] "GET /api/auth/profile HTTP/1.1" 200 36 "-" "-"[39m 
+PASS tests/auth.test.js
+  Authentication Middleware
+    Token Validation
+      ΓêÜ should allow access with valid token (338 ms)
+      ΓêÜ should reject request without token (60 ms)
+      ΓêÜ should reject request with invalid token (57 ms)
+      ΓêÜ should reject request with expired token (57 ms)
+      ΓêÜ should accept token from x-auth-token header (55 ms)
+      ΓêÜ should reject malformed authorization header (59 ms)
+    Role Authorization
+      ΓêÜ should allow admin to access admin routes (56 ms)
+      ΓêÜ should reject student from accessing admin routes (59 
+ms)
+    Security Headers
+      ΓêÜ should add security headers to authenticated requests 
+(58 ms)
+
+PASS tests/attendanceManagement.test.js
+  Attendance Management Unit Tests
+    GhanaAttendance Model
+      ΓêÜ Should have required fields (48 ms)
+      ΓêÜ Should validate attendance status enum (14 ms)
+      ΓêÜ Should validate period enum (10 ms)
+      ΓêÜ Should validate entry method enum (9 ms)
+      ΓêÜ Should calculate duration correctly (5 ms)
+      ΓêÜ Should identify late attendance (6 ms)
+      ΓêÜ Should identify early departure (7 ms)
+      ΓêÜ Should check if attendance is for today (5 ms)
+      ΓêÜ Should provide status descriptions (6 ms)
+    Attendance Validation
+      ΓêÜ Should validate timeOut is after timeIn (5 ms)
+      ΓêÜ Should handle Ghanaian holidays (19 ms)
+      ΓêÜ Should handle weather conditions (10 ms)
+      ΓêÜ Should handle late arrival details (5 ms)
+      ΓêÜ Should handle early departure details (6 ms)
+    Modification History
+      ΓêÜ Should track modification history (6 ms)
+      ΓêÜ Should handle attendance flags (7 ms)
+    Parent Notifications
+      ΓêÜ Should track parent notifications (7 ms)
+    Location and Device Tracking
+      ΓêÜ Should handle GPS coordinates (6 ms)
+    Ghanaian Education Compliance
+      ΓêÜ Should follow Ghanaian school structure (6 ms)
+      ΓêÜ Should handle Ghanaian holidays (5 ms)
+      ΓêÜ Should handle Ghanaian weather conditions (6 ms)
+    Data Validation
+      ΓêÜ Should validate Ghanaian phone numbers (6 ms)
+      ΓêÜ Should validate attendance periods (7 ms)
+      ΓêÜ Should validate attendance types (7 ms)
+      ΓêÜ Should validate entry methods (7 ms)
+    Attendance Analytics
+      ΓêÜ Should calculate attendance percentage correctly (5 ms)
+      ΓêÜ Should calculate punctuality rate correctly (5 ms)
+      ΓêÜ Should handle attendance trends (6 ms)
+
+PASS tests/announcementsManagement.test.js
+  Announcements Management Unit Tests
+    GhanaAnnouncement Model
+      ΓêÜ Should have required fields (20 ms)
+      ΓêÜ Should validate priority enum (8 ms)
+      ΓêÜ Should validate category enum (15 ms)
+      ΓêÜ Should validate target audience enum (12 ms)
+      ΓêÜ Should validate status enum (6 ms)
+      ΓêÜ Should validate language enum (7 ms)
+      ΓêÜ Should handle attachments (5 ms)
+      ΓêÜ Should handle banner image (4 ms)
+      ΓêÜ Should calculate read count correctly (7 ms)
+      ΓêÜ Should calculate reaction counts correctly (6 ms)
+      ΓêÜ Should calculate total engagement correctly (6 ms)
+    Targeting and Visibility
+      ΓêÜ Should handle class-level targeting (5 ms)
+      ΓêÜ Should handle specific user targeting (4 ms)
+      ΓêÜ Should handle Ghanaian regional targeting (4 ms)
+      ΓêÜ Should check if user can view announcement (6 ms)
+      ΓêÜ Should handle expiry date (4 ms)
+    Ghanaian Specific Features
+      ΓêÜ Should handle Ghanaian holidays (4 ms)
+      ΓêÜ Should handle Ghanaian regions (4 ms)
+      ΓêÜ Should handle language translations (6 ms)
+    Engagement Features
+      ΓêÜ Should track read status (4 ms)
+      ΓêÜ Should handle reactions (8 ms)
+      ΓêÜ Should handle comments (7 ms)
+      ΓêÜ Should handle notification settings (6 ms)
+    Approval Workflow
+      ΓêÜ Should handle approval process (4 ms)
+      ΓêÜ Should handle rejection (3 ms)
+    Version Control
+      ΓêÜ Should handle version history (4 ms)
+    Data Validation
+      ΓêÜ Should validate title length (4 ms)
+      ΓêÜ Should validate content length (5 ms)
+      ΓêÜ Should validate file types (8 ms)
+      ΓêÜ Should validate Ghanaian regions (4 ms)
+    Analytics and Reporting
+      ΓêÜ Should calculate engagement metrics (6 ms)
+      ΓêÜ Should handle notification analytics (4 ms)
+
+PASS tests/studentManagement.simple.test.js
+  Student Management Simple Tests
+    GhanaStudent Model Structure
+      ΓêÜ Should have required fields (64 ms)
+      ΓêÜ Should calculate age correctly (24 ms)
+      ΓêÜ Should have Ghanaian regions enum (12 ms)
+      ΓêÜ Should handle Ghanaian identification documents (13 ms)
+    Ghanaian Education Structure
+      ΓêÜ Should follow Ghanaian education structure (6 ms)
+      ΓêÜ Should have appropriate age ranges for each level (6 
+ms)
+      ΓêÜ Should support Ghanaian curriculum subjects (7 ms)
+    Data Validation
+      ΓêÜ Should validate Ghanaian phone numbers (8 ms)
+      ΓêÜ Should validate Ghana card format (6 ms)
+      ΓêÜ Should validate NHIS format (6 ms)
+    Student Profile Management
+      ΓêÜ Should handle comprehensive student profile (17 ms)
+      ΓêÜ Should handle special needs information (11 ms)
+      ΓêÜ Should handle guardian information (12 ms)
+
+PASS tests/rbacManagement.test.js
+  RBAC Management Unit Tests
+    RolePermission Model
+      ΓêÜ Should have required fields (21 ms)
+      ΓêÜ Should validate role enum (14 ms)
+      ΓêÜ Should validate scope enums (6 ms)
+      ΓêÜ Should handle time restrictions (7 ms)
+      ΓêÜ Should handle IP and device restrictions (5 ms)
+      ΓêÜ Should check specific permission (6 ms)
+      ΓêÜ Should get category permissions (5 ms)
+      ΓêÜ Should update specific permission (5 ms)
+    Static Methods
+      ΓêÜ Should get role permissions (3 ms)
+      ΓêÜ Should check if role has permission (3 ms)
+      ΓêÜ Should handle non-existent role (2 ms)
+      ΓêÜ Should get active roles (2 ms)
+    Default Permissions
+      ΓêÜ Should create default permissions structure (3 ms)
+    Permission Categories
+      ΓêÜ Should handle academic permissions (4 ms)
+      ΓêÜ Should handle student permissions (5 ms)
+      ΓêÜ Should handle attendance permissions (5 ms)
+      ΓêÜ Should handle announcements permissions (4 ms)
+      ΓêÜ Should handle financial permissions (6 ms)
+      ΓêÜ Should handle system permissions (6 ms)
+    Data Validation
+      ΓêÜ Should validate role enum values (20 ms)
+      ΓêÜ Should validate data access scope (32 ms)
+      ΓêÜ Should validate campus scope (9 ms)
+      ΓêÜ Should validate academic scope (15 ms)
+      ΓêÜ Should validate access days (6 ms)
+      ΓêÜ Should validate time format (5 ms)
+    Permission Matrix
+      ΓêÜ Should create comprehensive permission matrix (42 ms)
+    Ghanaian Context
+      ΓêÜ Should handle Ghanaian school structure permissions (7 
+ms)
+      ΓêÜ Should handle Ghanaian education system permissions (8 
+ms)
+
+PASS tests/schoolSetup.unit.test.js
+  School Setup Unit Tests
+    GhanaClass Model
+      ΓêÜ Should get Ghanaian class levels (29 ms)
+      ΓêÜ Should get next level for promotion (7 ms)
+    GhanaSubject Model
+      ΓêÜ Should get Ghanaian curriculum structure (5 ms)
+      ΓêÜ Should get subjects by level (5 ms)
+    Ghanaian Education Structure Validation
+      ΓêÜ Should have correct class progression (4 ms)
+      ΓêÜ Should have appropriate age ranges (4 ms)
+      ΓêÜ Should have comprehensive subject coverage (5 ms)
+
+PASS tests/schoolSetup.simple.test.js
+  School Setup Simple Tests
+    ΓêÜ Should get Ghanaian class levels (26 ms)
+    ΓêÜ Should get next level for promotion (5 ms)
+    ΓêÜ Should get Ghanaian curriculum (5 ms)
+
+FAIL tests/integration/student-attendance-report.test.js
+  ΓùÅ Test suite failed to run
+
+    Cannot find module '../../../app' from 
+'tests/integration/student-attendance-report.test.js'
+
+    [0m [90m  5 |[39m
+     [90m  6 |[39m [36mconst[39m request [33m=[39m 
+require([32m'supertest'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m [36mconst[39m app 
+[33m=[39m require([32m'../../../app'[39m)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m  8 |[39m [36mconst[39m [33mStudent[39m 
+[33m=[39m 
+require([32m'../../../models/Student'[39m)[33m;[39m
+     [90m  9 |[39m [36mconst[39m [33mAttendance[39m 
+[33m=[39m 
+require([32m'../../../models/Attendance'[39m)[33m;[39m
+     [90m 10 |[39m[0m
+
+      at Resolver._throwModNotFoundError 
+(../node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require 
+(tests/integration/student-attendance-report.test.js:7:13)
+
+FAIL tests/integration/grade-reportcard-export.test.js
+  ΓùÅ Test suite failed to run
+
+    Cannot find module '../../../app' from 
+'tests/integration/grade-reportcard-export.test.js'
+
+    [0m [90m  5 |[39m
+     [90m  6 |[39m [36mconst[39m request [33m=[39m 
+require([32m'supertest'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m [36mconst[39m app 
+[33m=[39m require([32m'../../../app'[39m)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m  8 |[39m [36mconst[39m [33mStudent[39m 
+[33m=[39m 
+require([32m'../../../models/Student'[39m)[33m;[39m
+     [90m  9 |[39m [36mconst[39m [33mGrade[39m [33m=[39m 
+require([32m'../../../models/Grade'[39m)[33m;[39m
+     [90m 10 |[39m [36mconst[39m [33mReportCard[39m 
+[33m=[39m 
+require([32m'../../../models/ReportCard'[39m)[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError 
+(../node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require 
+(tests/integration/grade-reportcard-export.test.js:7:13)
+
+FAIL tests/integration/fee-payment-receipt.test.js
+  ΓùÅ Test suite failed to run
+
+    Cannot find module '../../../app' from 
+'tests/integration/fee-payment-receipt.test.js'
+
+    [0m [90m  5 |[39m
+     [90m  6 |[39m [36mconst[39m request [33m=[39m 
+require([32m'supertest'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m [36mconst[39m app 
+[33m=[39m require([32m'../../../app'[39m)[33m;[39m
+     [90m    |[39m             [31m[1m^[22m[39m
+     [90m  8 |[39m [36mconst[39m [33mStudent[39m 
+[33m=[39m 
+require([32m'../../../models/Student'[39m)[33m;[39m
+     [90m  9 |[39m [36mconst[39m [33mFee[39m [33m=[39m 
+require([32m'../../../models/Fee'[39m)[33m;[39m
+     [90m 10 |[39m [36mconst[39m [33mPayment[39m 
+[33m=[39m 
+require([32m'../../../models/Payment'[39m)[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError 
+(../node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require 
+(tests/integration/fee-payment-receipt.test.js:7:13)
+
+FAIL tests/systemWide.test.js
+  ΓùÅ Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your 
+code or its dependencies use non-standard JavaScript syntax, or 
+when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to 
+transform your files into valid JS based on your Babel 
+configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     ΓÇó If you are trying to use ECMAScript Modules, see 
+https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     ΓÇó If you are trying to use TypeScript, see 
+https://jestjs.io/docs/getting-started#using-typescript
+     ΓÇó To have some of your "node_modules" files transformed, 
+you can specify a custom "transformIgnorePatterns" in your 
+config.
+     ΓÇó If you need a custom transformation specify a 
+"transform" option in your config.
+     ΓÇó If you simply want to mock your non-JS modules (e.g. 
+binary assets) you can stub them out with the "moduleNameMapper" 
+config option.
+
+    You'll find more details and examples of these config 
+options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\SPtech Projects\school management 
+project\server\tests\systemWide.test.js: Missing semicolon. 
+(655:66)
+
+    [0m [90m 653 |[39m
+     [90m 654 |[39m       
+criticalEvents[33m.[39mforEach(event [33m=>[39m {
+    [31m[1m>[22m[39m[90m 655 |[39m         expect([33mAudi
+tLog[39m[33m.[39mschema[33m.[39mpaths[33m.[39maction[33m.
+[39m[36menum[39m)[33m.[39mtoContain(event))[33m;[39m
+     [90m     |[39m                                            
+                       [31m[1m^[22m[39m
+     [90m 656 |[39m       })[33m;[39m
+     [90m 657 |[39m     })[33m;[39m
+     [90m 658 |[39m })[33m;[39m[0m
+
+      at constructor 
+(../node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at Parser.toParseError [as raise] 
+(../node_modules/@babel/parser/src/tokenizer/index.ts:1504:19)
+      at Parser.raise [as semicolon] 
+(../node_modules/@babel/parser/src/parser/util.ts:149:10)
+      at Parser.semicolon [as parseExpressionStatement] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1363:10)
+      at Parser.parseExpressionStatement [as 
+parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:702:19)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseStatementListItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at Parser.parseStatementListItem [as 
+parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as parseArrowExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2559:10)
+      at Parser.parseArrowExpression [as parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1346:25)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3194:12)
+      at Parser.allowInAnd [as parseMaybeAssignAllowIn] 
+(../node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at Parser.parseMaybeAssignAllowIn [as 
+parseMaybeAssignAllowInOrVoidPattern] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3308:17)
+      at Parser.parseMaybeAssignAllowInOrVoidPattern [as 
+parseExprListItem] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2790:18)
+      at Parser.parseExprListItem [as 
+parseCallExpressionArguments] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1042:14)
+      at Parser.parseCallExpressionArguments [as 
+parseCoverCallAndAsyncArrowHead] 
+(../node_modules/@babel/parser/src/parser/expression.ts:922:29)
+      at Parser.parseCoverCallAndAsyncArrowHead [as 
+parseSubscript] 
+(../node_modules/@babel/parser/src/parser/expression.ts:804:19)
+      at Parser.parseSubscript [as parseSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:763:19)
+      at Parser.parseSubscripts [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:748:17)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseStatementListItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at Parser.parseStatementListItem [as 
+parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as parseArrowExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2559:10)
+      at Parser.parseArrowExpression [as 
+parseParenAndDistinguishExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1847:12)
+      at Parser.parseParenAndDistinguishExpression [as 
+parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1170:21)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3194:12)
+      at Parser.allowInAnd [as parseMaybeAssignAllowIn] 
+(../node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at Parser.parseMaybeAssignAllowIn [as 
+parseMaybeAssignAllowInOrVoidPattern] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3308:17)
+      at Parser.parseMaybeAssignAllowInOrVoidPattern [as 
+parseExprListItem] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2790:18)
+      at Parser.parseExprListItem [as 
+parseCallExpressionArguments] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1042:14)
+      at Parser.parseCallExpressionArguments [as 
+parseCoverCallAndAsyncArrowHead] 
+(../node_modules/@babel/parser/src/parser/expression.ts:922:29)
+      at Parser.parseCoverCallAndAsyncArrowHead [as 
+parseSubscript] 
+(../node_modules/@babel/parser/src/parser/expression.ts:804:19)
+      at Parser.parseSubscript [as parseSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:763:19)
+      at Parser.parseSubscripts [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:748:17)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at Parser.parseMaybeAssign [as parseExpressionBase] 
+(../node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3189:16)
+      at Parser.allowInAnd [as parseExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at Parser.parseExpression [as parseStatementContent] 
+(../node_modules/@babel/parser/src/parser/statement.ts:688:23)
+      at Parser.parseStatementContent [as parseStatementLike] 
+(../node_modules/@babel/parser/src/parser/statement.ts:482:17)
+      at Parser.parseStatementLike [as parseStatementListItem] 
+(../node_modules/@babel/parser/src/parser/statement.ts:431:17)
+      at Parser.parseStatementListItem [as 
+parseBlockOrModuleBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1444:16)
+      at Parser.parseBlockOrModuleBlockBody [as parseBlockBody] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1417:10)
+      at Parser.parseBlockBody [as parseBlock] 
+(../node_modules/@babel/parser/src/parser/statement.ts:1385:10)
+      at Parser.parseBlock [as parseFunctionBody] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2618:24)
+      at Parser.parseFunctionBody [as parseArrowExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2559:10)
+      at Parser.parseArrowExpression [as 
+parseParenAndDistinguishExpression] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1847:12)
+      at Parser.parseParenAndDistinguishExpression [as 
+parseExprAtom] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1170:21)
+      at Parser.parseExprAtom [as parseExprSubscripts] 
+(../node_modules/@babel/parser/src/parser/expression.ts:742:23)
+      at Parser.parseExprSubscripts [as parseUpdate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:721:21)
+      at Parser.parseUpdate [as parseMaybeUnary] 
+(../node_modules/@babel/parser/src/parser/expression.ts:683:23)
+      at Parser.parseMaybeUnary [as parseMaybeUnaryOrPrivate] 
+(../node_modules/@babel/parser/src/parser/expression.ts:417:14)
+      at Parser.parseMaybeUnaryOrPrivate [as parseExprOps] 
+(../node_modules/@babel/parser/src/parser/expression.ts:429:23)
+      at Parser.parseExprOps [as parseMaybeConditional] 
+(../node_modules/@babel/parser/src/parser/expression.ts:384:23)
+      at Parser.parseMaybeConditional [as parseMaybeAssign] 
+(../node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at parseMaybeAssign 
+(../node_modules/@babel/parser/src/parser/expression.ts:257:12)
+      at Parser.callback [as allowInAnd] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3194:12)
+      at Parser.allowInAnd [as parseMaybeAssignAllowIn] 
+(../node_modules/@babel/parser/src/parser/expression.ts:256:17)
+      at Parser.parseMaybeAssignAllowIn [as 
+parseMaybeAssignAllowInOrVoidPattern] 
+(../node_modules/@babel/parser/src/parser/expression.ts:3308:17)
+      at Parser.parseMaybeAssignAllowInOrVoidPattern [as 
+parseExprListItem] 
+(../node_modules/@babel/parser/src/parser/expression.ts:2790:18)
+      at Parser.parseExprListItem [as 
+parseCallExpressionArguments] 
+(../node_modules/@babel/parser/src/parser/expression.ts:1042:14)
+
+Test Suites: 11 failed, 8 passed, 19 total
+Tests:       96 failed, 13 skipped, 163 passed, 272 total
+Snapshots:   0 total
+Time:        35.952 s, estimated 147 s
+Ran all test suites.
+Force exiting Jest: Have you considered using 
+`--detectOpenHandles` to detect async operations that kept 
+running after all tests finished?
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\SPtech Projects\school management 
+project\server
+npm error workspace school-management-server@1.0.0
+npm error location C:\SPtech Projects\school management 
+project\server
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c jest 
+--runInBand --verbose

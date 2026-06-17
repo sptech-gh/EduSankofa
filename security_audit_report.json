@@ -1,0 +1,44 @@
+{
+  "timestamp": "2026-02-14T21:43:03.033Z",
+  "score": 70,
+  "vulnerabilities": [
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/users",
+      "description": "Error checking route /api/users: Request failed with status code 404"
+    },
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/students",
+      "description": "Error checking route /api/students: Request failed with status code 404"
+    },
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/fees",
+      "description": "Error checking route /api/fees: Request failed with status code 404"
+    },
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/grades",
+      "description": "Error checking route /api/grades: Request failed with status code 404"
+    },
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/attendance",
+      "description": "Error checking route /api/attendance: Request failed with status code 404"
+    },
+    {
+      "type": "ROUTE_ERROR",
+      "severity": "MEDIUM",
+      "route": "/api/payments",
+      "description": "Error checking route /api/payments: Request failed with status code 404"
+    }
+  ],
+  "recommendations": [],
+  "totalChecks": 8
+}

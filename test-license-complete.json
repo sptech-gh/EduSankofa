@@ -1,0 +1,7 @@
+{
+  "schoolName": "Demo School",
+  "licenseKey": "EDU-1K2J3M4N5P6Q7R8S9T0U1V2W3X4Y5Z6",
+  "expiryDate": "2025-12-31T23:59:59.000Z",
+  "maxUsers": 100,
+  "deploymentType": "self-hosted"
+}

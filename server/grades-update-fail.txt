@@ -1,0 +1,102 @@
+﻿
+> school-management-server@1.0.0 test
+> jest --runInBand tests/grades.test.js -t should update grade with teacher token
+
+2026-03-16 09:14:52:1452 [[34mdebug[39m]: [34mUser authenticated successfully[39m {
+  "userId": "69b7ca0b1bceece1869f6f11",
+  "role": "teacher",
+  "url": "/"
+}
+2026-03-16 09:14:52:1452 [[35mhttp[39m]: [35m::ffff:127.0.0.1 - - [16/Mar/2026:09:14:52 +0000] "POST /api/grades HTTP/1.1" 404 31 "-" "-"[39m 
+node.exe : FAIL tests/grades.test.js (6.362 s)
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~
+    + CategoryInfo          : NotSpecified: (FAIL tests/grades.t 
+   est.js (6.362 s):String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Grades Service
+    Grade CRUD Operations
+      ├ù should update grade with teacher token (190 ms)
+      Γùï skipped should create new grade with teacher token
+      Γùï skipped should reject grade creation without 
+authentication
+      Γùï skipped should reject grade creation with insufficient 
+permissions
+      Γùï skipped should get all grades with teacher token
+      Γùï skipped should get grades by student ID
+      Γùï skipped should delete grade with teacher token
+    Grade Validation
+      Γùï skipped should reject grade creation with missing 
+required fields
+      Γùï skipped should reject grade creation with invalid score
+      Γùï skipped should reject grade creation with invalid grade
+    Report Card Generation
+      Γùï skipped should generate report card for student
+      Γùï skipped should calculate GPA in report card
+      Γùï skipped should include grade distribution in summary
+      Γùï skipped should include attendance in report card
+    Report Card Export
+      Γùï skipped should export report card as PDF
+      Γùï skipped should export report card as Excel
+      Γùï skipped should export report card as CSV
+      Γùï skipped should include student information in export
+      Γùï skipped should include school information in export
+    Grade Analytics
+      Γùï skipped should calculate grade distribution
+      Γùï skipped should calculate subject performance
+      Γùï skipped should calculate class ranking
+      Γùï skipped should generate grade trends report
+
+  ΓùÅ Grades Service ΓÇ║ Grade CRUD Operations ΓÇ║ should update 
+grade with teacher token
+
+    expected 201 "Created", got 404 "Not Found"
+
+    [0m [90m 250 |[39m           comments[33m:[39m 
+[32m'Initial'[39m
+     [90m 251 |[39m         })
+    [31m[1m>[22m[39m[90m 252 |[39m         
+[33m.[39mexpect([35m201[39m)[33m;[39m
+     [90m     |[39m          [31m[1m^[22m[39m
+     [90m 253 |[39m
+     [90m 254 |[39m       [36mconst[39m gradeId [33m=[39m 
+createResponse[33m.[39mbody[33m.[39m_id[33m;[39m
+     [90m 255 |[39m       [36mconst[39m updateData 
+[33m=[39m {[0m
+
+      at Object.expect (tests/grades.test.js:252:10)
+      ----
+      at Test._assertStatus 
+(../node_modules/supertest/lib/test.js:252:14)
+      at ../node_modules/supertest/lib/test.js:308:13
+      at Test._assertFunction 
+(../node_modules/supertest/lib/test.js:285:13)
+      at Test.assert 
+(../node_modules/supertest/lib/test.js:164:23)
+      at Server.localAssert 
+(../node_modules/supertest/lib/test.js:120:14)
+
+Test Suites: 1 failed, 1 total
+Tests:       1 failed, 22 skipped, 23 total
+Snapshots:   0 total
+Time:        6.541 s, estimated 8 s
+Ran all test suites matching /tests\\grades.test.js/i with tests 
+matching "should update grade with teacher token".
+Force exiting Jest: Have you considered using 
+`--detectOpenHandles` to detect async operations that kept 
+running after all tests finished?
+npm error Lifecycle script `test` failed with error:
+npm error code 1
+npm error path C:\SPtech Projects\school management 
+project\server
+npm error workspace school-management-server@1.0.0
+npm error location C:\SPtech Projects\school management 
+project\server
+npm error command failed
+npm error command C:\WINDOWS\system32\cmd.exe /d /s /c jest 
+--runInBand tests/grades.test.js -t ^^^"should^^^ update^^^ 
+grade^^^ with^^^ teacher^^^ token^^^"
