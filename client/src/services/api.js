@@ -122,7 +122,7 @@ api.interceptors.response.use(
 
       return Promise.reject({
         status,
-        message: data?.message || "An error occurred",
+        message: data?.message || (Array.isArray(data?.errors) ? data.errors.map(e => e.msg || e.message).filter(Boolean).join(', ') : null) || "An error occurred",
         code: data?.code || "UNKNOWN_ERROR",
         details: data,
       });

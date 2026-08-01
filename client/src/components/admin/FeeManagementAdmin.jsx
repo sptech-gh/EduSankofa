@@ -78,7 +78,7 @@ const ComponentsTab = () => {
   };
 
   const handleSubmit = async () => {
-    if (!form.name || !form.category || !form.billingCycle) { setError('Name, category, and billing cycle are required'); return; }
+    if (!form.name || !form.code || !form.category || !form.billingCycle) { setError('Name, code, category, and billing cycle are required'); return; }
     setSubmitting(true); setError('');
     try {
       if (editing) {
@@ -87,7 +87,10 @@ const ComponentsTab = () => {
         await apiService.post('/api/admin/fees/components', form);
       }
       setShowForm(false); load();
-    } catch (err) { setError(err?.message || 'Save failed'); }
+    } catch (err) {
+      const msg = err?.message || err?.data?.message || (err?.data?.errors ? err.data.errors.map(e => e.msg).join(', ') : '') || 'Save failed';
+      setError(msg);
+    }
     setSubmitting(false);
   };
 
