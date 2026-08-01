@@ -4,7 +4,17 @@ node_modules/
 /build
 /client/build
 
-# Environment files
+# Local runtime data and caches
+/data/db/
+server/uploads/
+server/backups/
+client/.eslintcache/
+.vscode/
+.tmp/
+.cache/
+coverage/
+
+# Environment files (NEVER commit secrets)
 .env
 .env.local
 .env.development.local
@@ -12,6 +22,13 @@ node_modules/
 .env.production.local
 server/.env
 server/.env.local
+super-admin-server/.env
+super-admin-server/.env.local
+client/.env
+client/.env.local
+
+# Do NOT ignore .env.example templates (these are safe to commit)
+!.env.example
 
 # Logs
 npm-debug.log*
@@ -24,9 +41,36 @@ logs/
 .DS_Store
 Thumbs.db
 
-# Test coverage
-coverage/
+# Generated reports, AI notes, and planning docs
+*.md
+!README.md
+!DEPLOYMENT_GUIDE.md
+!SETUP_GUIDE.md
 
-# Uploads and temporary files
-server/uploads/
-server/backups/
+# Ignore noisy report / audit / plan files
+*REPORT*.md
+*TEST*.md
+*FINAL*.md
+*PHASE*.md
+*PLAN*.md
+*SUMMARY*.md
+*AUDIT*.md
+*BUGFIXES*.md
+*IMPROVEMENTS*.md
+*IMPLEMENTATION*.md
+*VERIFICATION*.md
+*GUIDE*.md
+
+# Sample / temporary data files
+auth_response.json
+new_auth.json
+*.tmp
+*.bak
+security_audit_report.json
+test-license*.json
+test-results-audit.json
+CRITICAL_SECURITY_FIXES_APPLIED.md
+
+# Temporary directories
+scratch/
+server/scratch/
