@@ -31,7 +31,7 @@ const schoolSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: ['active', 'suspended', 'pending'],
+    enum: ['active', 'suspended', 'pending', 'pending_payment', 'expired'],
     default: 'pending'
   },
   licenseId: {

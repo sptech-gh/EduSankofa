@@ -108,6 +108,32 @@ class BillingService {
         const licenseKeyHash = hashLicenseKey(licenseKey);
         const expiryDate = calculateExpiryDate(1); // 1 year from payment
 
+        // Provision the school database (B4: wire payment to provisioning)
+        const SchoolProvisioningService = require('./provisioningService');
+        const provisioningService = new SchoolProvisioningService();
+        await provisioningService.initializeConnection();
+
+        const School = require('../models/School');
+        const school = await School.findById(schoolId);
+        
+        if (school && !school.databaseName) {
+          // First payment — provision the school
+          const planData = {
+            isDemo: false,
+            maxStudents: metadata.maxStudents || 100,
+            maxStaff: metadata.maxStaff || 20
+          };
+          const schoolData = {
+            id: school._id,
+            name: school.name,
+            subdomain: school.subdomain
+          };
+          await provisioningService.provisionSchool(schoolData, planData, null);
+        } else if (school) {
+          // School already provisioned — just activate
+          await School.findByIdAndUpdate(schoolId, { status: 'active' });
+        }
+
         license = new CentralLicense({
           schoolId,
           planId,
@@ -136,10 +162,6 @@ class BillingService {
         });
 
         await license.save();
-
-        // Update school status to active
-        const School = require('../models/School');
-        await School.findByIdAndUpdate(schoolId, { status: 'active' });
 
       } else {
         // Update existing license

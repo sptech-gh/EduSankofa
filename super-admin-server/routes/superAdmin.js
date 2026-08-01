@@ -17,15 +17,15 @@ router.post('/login',
   superAdminController.login
 );
 
+// Protected routes — register is NOT public (B5: prevent unauthorized super admin creation)
+router.use(superAdminAuth);
+
 router.post('/register',
   authLimiter,
   validate(superAdminRegisterSchema),
   auditLog('CREATE_SCHOOL', 'superadmin'),
   superAdminController.register
 );
-
-// Protected routes
-router.use(superAdminAuth);
 
 router.get('/profile',
   auditLog('VIEW_DASHBOARD', 'superadmin'),

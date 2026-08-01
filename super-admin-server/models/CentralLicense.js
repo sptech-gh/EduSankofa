@@ -120,6 +120,36 @@ const centralLicenseSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'SuperAdmin'
     }
+  }],
+  paymentHistory: [{
+    transactionReference: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true
+    },
+    currency: {
+      type: String,
+      default: 'GHS'
+    },
+    paidAt: {
+      type: Date,
+      required: true
+    },
+    paymentMethod: {
+      type: String
+    },
+    status: {
+      type: String,
+      enum: ['success', 'failed', 'refunded'],
+      default: 'success'
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
   }]
 }, {
   timestamps: true
