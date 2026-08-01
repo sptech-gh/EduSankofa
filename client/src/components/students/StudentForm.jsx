@@ -681,12 +681,9 @@ const StudentForm = ({
               <h3 className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 border-b border-neutral-200 dark:border-neutral-700 pb-2">
                 Academic Information
               </h3>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400">
-                The existing class selection is kept below, and the source-form academic fields are added here for completeness.
-              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="studentClass" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Class</label>
+                  <label htmlFor="studentClass" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Class to Enroll In</label>
                   <select
                     id="studentClass"
                     name="class"
@@ -717,7 +714,7 @@ const StudentForm = ({
                   />
                 </div>
                 <div>
-                  <label htmlFor="currentClassGrade" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Current Class/Grade</label>
+                  <label htmlFor="currentClassGrade" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Previous Class (if transfer)</label>
                   <select
                     id="currentClassGrade"
                     name="currentClassGrade"
@@ -725,22 +722,7 @@ const StudentForm = ({
                     onChange={onInputChange}
                     className="input mt-1"
                   >
-                    <option value="">Select current class</option>
-                    {GES_CLASS_LEVELS.map((level) => (
-                      <option key={level} value={level}>{level}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label htmlFor="classApplyingFor" className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">Class Applying For</label>
-                  <select
-                    id="classApplyingFor"
-                    name="classApplyingFor"
-                    value={formData.classApplyingFor || ''}
-                    onChange={onInputChange}
-                    className="input mt-1"
-                  >
-                    <option value="">Select class applying for</option>
+                    <option value="">Select previous class</option>
                     {GES_CLASS_LEVELS.map((level) => (
                       <option key={level} value={level}>{level}</option>
                     ))}
