@@ -47,6 +47,21 @@ const userSchema = new mongoose.Schema(
       },
       default: "student",
     },
+    // Cross-role permissions (e.g., an accountant can also serve as accounts officer)
+    // Used by authorizeRoles middleware for combined access checks
+    secondaryRoles: {
+      type: [{
+        type: String,
+        enum: [
+          "super admin", "school admin", "admin", "teacher", "student",
+          "staff", "accountant", "accounts officer", "parent", "librarian",
+          "counselor", "head teacher", "deputy head teacher", "subject head",
+          "class teacher", "administrative staff", "support staff",
+          "headmaster", "proprietor",
+        ],
+      }],
+      default: [],
+    },
     schoolId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "SchoolProfile",
@@ -212,7 +227,6 @@ userSchema.methods.generateAuthToken = function () {
       schoolId: this.schoolId,
       forcePasswordChange: this.forcePasswordChange,
     });
-
     logger.debug("Token generated successfully", {
       userId: this._id,
       role: this.role,

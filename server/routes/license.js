@@ -1,7 +1,11 @@
 const express = require('express');
 const { getInstance } = require('../services/licenseService');
+const { auth, authorizeRoles } = require('../middleware/auth');
 const router = express.Router();
 const rateLimit = require('express-rate-limit');
+
+// Roles allowed to view/validate license status
+const LICENSE_VIEW_ROLES = ["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"];
 
 // Rate limiting for activation attempts
 const activationLimiter = rateLimit({
@@ -19,7 +23,7 @@ const activationLimiter = rateLimit({
 });
 
 // Get current license status
-router.get('/status', async (req, res) => {
+router.get('/status', auth, authorizeRoles(...LICENSE_VIEW_ROLES), async (req, res) => {
   try {
     const licenseService = getInstance();
     const currentLicense = licenseService.getCurrentLicense();
@@ -92,7 +96,7 @@ router.post('/activate', activationLimiter, async (req, res) => {
 });
 
 // Validate license (for frontend checks)
-router.post('/validate', async (req, res) => {
+router.post('/validate', auth, authorizeRoles(...LICENSE_VIEW_ROLES), async (req, res) => {
   try {
     const licenseService = getInstance();
     const validation = await licenseService.validateLicense();

@@ -414,6 +414,7 @@ router.post("/login", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        secondaryRoles: user.secondaryRoles || [],
         forcePasswordChange: !!user.forcePasswordChange,
       },
     };
@@ -526,6 +527,7 @@ router.get("/profile", auth, async (req, res) => {
       name: req.user.name,
       email: req.user.email,
       role: req.user.role,
+      secondaryRoles: req.user.secondaryRoles || [],
       createdAt: req.user.createdAt,
       updatedAt: req.user.updatedAt,
     };

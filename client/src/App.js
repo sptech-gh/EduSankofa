@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from "./context";
 import { AppProviders } from "./components/edusankofa/providers/AppProviders";
 
 // Import pages
-import { LoginPage, SignupPage, ForgotPasswordPage } from "./pages/auth";
+import { LoginPage, SignupPage, ForgotPasswordPage, ChangePasswordPage } from "./pages/auth";
 import NotAuthorized from "./components/NotAuthorized";
 
 // Import layout
@@ -35,6 +35,19 @@ import SchoolProfileSettings from "./components/SchoolProfileSettings";
 import GradingSettingsManagement from "./components/GradingSettingsManagement";
 import PromotionManagement from "./components/PromotionManagement";
 import SystemSettings from "./components/SystemSettings";
+import AccountantPortal from "./components/accountant/AccountantPortal";
+import FeeManagementAdmin from "./components/admin/FeeManagementAdmin";
+
+// Phase 2-7 Portal Imports
+import HeadmasterLayout from './components/headmaster/HeadmasterLayout';
+import PayrollDashboard from './components/payroll/PayrollDashboard';
+import PayrollRunNew from './components/payroll/PayrollRunNew';
+import PayrollRunDetail from './components/payroll/PayrollRunDetail';
+import PayrollConfig from './components/payroll/PayrollConfig';
+import ParentPortal from './components/parent/ParentPortal';
+import TeacherPortal from './components/teacher/TeacherPortal';
+import ProfileManagement from './components/profile/ProfileManagement';
+
 
 // Import utilities
 import { getToken } from "./lib/authStorage";
@@ -43,25 +56,42 @@ import { getToken } from "./lib/authStorage";
 // PROTECTED ROUTE COMPONENT
 // =================================================================
 
+const normalizeRole = (value) => {
+  const raw = String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
+  if (!raw) return raw;
+  if (raw === "accounts officer") return raw;
+  if (raw === "accounts_officer" || raw === "accounts-officer") {
+    return "accounts officer";
+  }
+  return raw;
+};
+
+const getRoleRedirect = (role) => {
+  const normalizedRole = normalizeRole(role);
+  if (normalizedRole === "headmaster" || normalizedRole === "proprietor") {
+    return "/headmaster";
+  }
+  if (normalizedRole === "parent") {
+    return "/parent";
+  }
+  if (normalizedRole === "teacher" || normalizedRole === "class teacher") {
+    return "/teacher";
+  }
+  if (normalizedRole === "accountant" || normalizedRole === "accounts officer") {
+    return "/accountant";
+  }
+  return null;
+};
+
 const ProtectedRoute = ({ children, roles = [] }) => {
   const { isAuthenticated, user, loading } = useAuth();
 
-  const normalizeRole = (value) => {
-    const raw = String(value || "").trim().toLowerCase().replace(/\s+/g, " ");
-    if (!raw) return raw;
-    if (raw === "accounts officer") return raw;
-    if (raw === "accounts_officer" || raw === "accounts-officer") {
-      return "accounts officer";
-    }
-    return raw;
-  };
-
   if (loading || (isAuthenticated && roles && roles.length > 0 && !user)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading application...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-400">Loading application...</p>
         </div>
       </div>
     );
@@ -88,19 +118,36 @@ const ProtectedRoute = ({ children, roles = [] }) => {
 // =================================================================
 
 const NotFound = () => (
-  <div className="min-h-screen flex items-center justify-center bg-gray-100">
+  <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
     <div className="text-center">
-      <h1 className="text-4xl font-bold text-gray-900 mb-4">404</h1>
-      <p className="text-gray-600 mb-8">Page not found</p>
+      <h1 className="text-4xl font-bold text-neutral-900 dark:text-white mb-4">404</h1>
+      <p className="text-neutral-600 dark:text-neutral-400 mb-8">Page not found</p>
       <button
         onClick={() => window.history.back()}
-        className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        className="btn btn-primary px-6 py-2"
       >
         Go Back
       </button>
     </div>
   </div>
 );
+
+const DashboardRedirector = () => {
+  const { user } = useAuth();
+  const redirectPath = getRoleRedirect(user?.role);
+  if (redirectPath) {
+    return <Navigate to={redirectPath} replace />;
+  }
+  return <ModernDashboard />;
+};
+
+const HomeRedirector = ({ isAuthenticated }) => {
+  const { user } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  const redirectPath = getRoleRedirect(user?.role);
+  return <Navigate to={redirectPath || "/dashboard"} replace />;
+};
 
 // =================================================================
 // MAIN APP COMPONENT
@@ -134,10 +181,10 @@ function App() {
   // Loading state
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50 dark:bg-neutral-900">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading application...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto"></div>
+          <p className="mt-4 text-neutral-600 dark:text-neutral-400">Loading application...</p>
         </div>
       </div>
     );
@@ -147,22 +194,17 @@ function App() {
     <AuthProvider>
       <AppProviders>
         <Routes>
-            {/* Default route - redirect based on auth status */}
+            {/* Default route - redirect based on auth status and role */}
             <Route
               path="/"
-              element={
-                isAuthenticated ? (
-                  <Navigate to="/dashboard" replace />
-                ) : (
-                  <Navigate to="/login" replace />
-                )
-              }
+              element={<HomeRedirector isAuthenticated={isAuthenticated} />}
             />
 
             {/* Authentication routes */}
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/change-password" element={<ChangePasswordPage />} />
 
             {/* Unauthorized page */}
             <Route path="/not-authorized" element={<NotAuthorized />} />
@@ -173,7 +215,17 @@ function App() {
               element={
                 <ProtectedRoute>
                   <AppLayout>
-                    <ModernDashboard />
+                    <DashboardRedirector />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <AppLayout>
+                    <ProfileManagement />
                   </AppLayout>
                 </ProtectedRoute>
               }
@@ -183,7 +235,7 @@ function App() {
             <Route
               path="/students"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <StudentsManagementGhana />
                   </AppLayout>
@@ -193,7 +245,7 @@ function App() {
             <Route
               path="/students/:id"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <StudentsManagementGhana />
                   </AppLayout>
@@ -203,7 +255,7 @@ function App() {
             <Route
               path="/dashboard-analytics"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <DashboardAnalytics />
                   </AppLayout>
@@ -213,7 +265,7 @@ function App() {
             <Route
               path="/grades"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <GradesManagement />
                   </AppLayout>
@@ -223,7 +275,7 @@ function App() {
             <Route
               path="/subjects"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <SubjectsManagement />
                   </AppLayout>
@@ -233,7 +285,7 @@ function App() {
             <Route
               path="/attendance"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <AttendanceManagement />
                   </AppLayout>
@@ -243,7 +295,7 @@ function App() {
             <Route
               path="/report-cards"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher"]}>
                   <AppLayout>
                     <ReportCardsManagement />
                   </AppLayout>
@@ -255,7 +307,7 @@ function App() {
             <Route
               path="/fees"
               element={
-                <ProtectedRoute roles={["admin", "accounts officer"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <FeesManagement />
                   </AppLayout>
@@ -265,9 +317,33 @@ function App() {
             <Route
               path="/payments"
               element={
-                <ProtectedRoute roles={["admin", "accounts officer"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <PaymentsManagement />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Accountant Portal */}
+            <Route
+              path="/accountant"
+              element={
+                <ProtectedRoute roles={["accountant", "accounts officer"]}>
+                  <AppLayout>
+                    <AccountantPortal />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* Admin Fee Management */}
+            <Route
+              path="/admin/fees"
+              element={
+                <ProtectedRoute roles={["admin", "school admin"]}>
+                  <AppLayout>
+                    <FeeManagementAdmin />
                   </AppLayout>
                 </ProtectedRoute>
               }
@@ -277,7 +353,7 @@ function App() {
             <Route
               path="/messages"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher", "student", "accounts officer"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher", "student", "parent", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <Messages />
                   </AppLayout>
@@ -287,7 +363,7 @@ function App() {
             <Route
               path="/announcements"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher", "student", "accounts officer"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher", "student", "parent", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <Announcements />
                   </AppLayout>
@@ -297,7 +373,7 @@ function App() {
             <Route
               path="/announcements/:id"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher", "student", "accounts officer"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher", "student", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <AnnouncementDetail />
                   </AppLayout>
@@ -307,7 +383,7 @@ function App() {
             <Route
               path="/notifications"
               element={
-                <ProtectedRoute roles={["admin", "staff", "teacher"]}>
+                <ProtectedRoute roles={["admin", "school admin", "headmaster", "proprietor", "staff", "teacher", "student", "parent", "accounts officer", "accountant"]}>
                   <AppLayout>
                     <Notifications />
                   </AppLayout>
@@ -427,7 +503,89 @@ function App() {
             />
 
             {/* 404 catch-all route */}
+
+            {/* ───────────────────────────────────────────────────── */}
+            {/* Phase 2: Headmaster / Proprietor Portal               */}
+            {/* ───────────────────────────────────────────────────── */}
+            <Route
+              path="/headmaster/*"
+              element={
+                <ProtectedRoute roles={["headmaster", "proprietor", "head teacher", "school admin", "admin"]}>
+                  <HeadmasterLayout />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ───────────────────────────────────────────────────── */}
+            {/* Phase 3: Staff Payroll                                 */}
+            {/* ───────────────────────────────────────────────────── */}
+            <Route
+              path="/payroll"
+              element={
+                <ProtectedRoute roles={["accountant", "accounts officer", "school admin", "admin", "headmaster", "head teacher"]}>
+                  <AppLayout>
+                    <PayrollDashboard />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payroll/new"
+              element={
+                <ProtectedRoute roles={["accountant", "accounts officer", "school admin", "admin", "headmaster"]}>
+                  <AppLayout>
+                    <PayrollRunNew />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payroll/runs/:runId"
+              element={
+                <ProtectedRoute roles={["accountant", "accounts officer", "school admin", "admin", "headmaster", "head teacher"]}>
+                  <AppLayout>
+                    <PayrollRunDetail />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/payroll/config"
+              element={
+                <ProtectedRoute roles={["accountant", "school admin", "admin", "headmaster"]}>
+                  <AppLayout>
+                    <PayrollConfig />
+                  </AppLayout>
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ───────────────────────────────────────────────────── */}
+            {/* Phase 6: Parent Portal                                 */}
+            {/* ───────────────────────────────────────────────────── */}
+            <Route
+              path="/parent/*"
+              element={
+                <ProtectedRoute roles={["parent"]}>
+                  <ParentPortal />
+                </ProtectedRoute>
+              }
+            />
+
+            {/* ───────────────────────────────────────────────────── */}
+            {/* Phase 7: Teacher Portal                                */}
+            {/* ───────────────────────────────────────────────────── */}
+            <Route
+              path="/teacher/*"
+              element={
+                <ProtectedRoute roles={["teacher", "class teacher", "head teacher", "subject head"]}>
+                  <TeacherPortal />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="*" element={<NotFound />} />
+
           </Routes>
       </AppProviders>
     </AuthProvider>

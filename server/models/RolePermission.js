@@ -8,9 +8,13 @@ const rolePermissionSchema = new mongoose.Schema(
       required: true,
       enum: [
         "Super Admin",
-        "School Admin", 
+        "School Admin",
+        "Admin",
+        "Headmaster",
+        "Proprietor",
         "Teacher",
         "Accountant",
+        "Accounts Officer",
         "Parent",
         "Student",
         "Staff",
@@ -103,6 +107,9 @@ const rolePermissionSchema = new mongoose.Schema(
         manageScholarships: { type: Boolean, default: false },
         generateReports: { type: Boolean, default: false },
         approveTransactions: { type: Boolean, default: false },
+        receivePayments: { type: Boolean, default: false },
+        generateReceipts: { type: Boolean, default: false },
+        viewAssignedReports: { type: Boolean, default: false },
         exportData: { type: Boolean, default: false },
         viewAllFinancial: { type: Boolean, default: false },
         viewOwnClass: { type: Boolean, default: false },
@@ -245,7 +252,19 @@ rolePermissionSchema.index({ "permissions.system.manageSchool": 1 });
 
 // Static method to get permissions for a role
 rolePermissionSchema.statics.getRolePermissions = async function (role) {
-  const rolePermission = await this.findOne({ role, isActive: true });
+  const titleCaseRole = String(role || "")
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+
+  const rolePermission = await this.findOne({
+    $or: [
+      { role: titleCaseRole, isActive: true },
+      { role: role, isActive: true }
+    ]
+  });
   return rolePermission ? rolePermission.permissions : null;
 };
 
@@ -272,6 +291,7 @@ rolePermissionSchema.statics.createDefaultPermissions = async function () {
         create: true, read: true, update: true, delete: true,
         manageStudents: true, manageClasses: true, manageSubjects: true,
         manageGrades: true, manageExams: true, managePromotions: true,
+        approve: true,
       },
       student: {
         create: true, read: true, update: true, delete: true,
@@ -323,6 +343,7 @@ rolePermissionSchema.statics.createDefaultPermissions = async function () {
         create: true, read: true, update: true, delete: true,
         manageStudents: true, manageClasses: true, manageSubjects: true,
         manageGrades: true, manageExams: true, managePromotions: true,
+        approve: true,
       },
       student: {
         create: true, read: true, update: true, delete: true,
@@ -367,6 +388,143 @@ rolePermissionSchema.statics.createDefaultPermissions = async function () {
         manageNotifications: true, viewAllMessages: true, manageTemplates: true,
       },
     },
+    "Admin": {
+      academic: {
+        create: true, read: true, update: true, delete: true,
+        manageStudents: true, manageClasses: true, manageSubjects: true,
+        manageGrades: true, manageExams: true, managePromotions: true,
+        approve: true,
+      },
+      student: {
+        create: true, read: true, update: true, delete: true,
+        viewAll: true, manageAdmission: true, manageProfile: true,
+        manageAttendance: true, manageDiscipline: true, manageMedical: true,
+        manageFees: true, bulkImport: true, exportData: true,
+      },
+      attendance: {
+        create: true, read: true, update: true, delete: true,
+        markDaily: true, viewAll: true, override: true, approve: true,
+        generateReports: true, exportReports: true, manageHolidays: true,
+      },
+      announcements: {
+        create: true, read: true, update: true, delete: true,
+        publish: true, targetAll: true, targetSpecific: true,
+        manageComments: true, moderate: true, sendNotifications: true,
+        viewAnalytics: true,
+      },
+      financial: {
+        create: true, read: true, update: true, delete: true,
+        manageFees: true, managePayments: true, manageInvoices: true,
+        manageScholarships: true, generateReports: true, approveTransactions: true,
+        exportData: true, viewAllFinancial: true,
+      },
+      user: {
+        create: true, read: true, update: true, delete: true,
+        manageRoles: true, managePermissions: true, resetPasswords: true,
+        activateDeactivate: true, viewAll: true,
+      },
+      system: {
+        manageSchool: true, manageSettings: true, manageAcademicYear: true,
+        manageTerms: true, manageGradingSystem: true, manageCurriculum: true,
+        manageHolidays: true, manageBackup: true, viewLogs: true,
+        manageSecurity: true, manageIntegrations: true, manageReports: true,
+        systemMaintenance: true,
+      },
+      reports: {
+        viewAll: true, generateReports: true, exportReports: true,
+        manageTemplates: true, scheduleReports: true, viewAnalytics: true,
+        manageDashboards: true, viewSystemStats: true,
+      },
+      communication: {
+        sendMessages: true, sendEmails: true, sendSMS: true,
+        manageNotifications: true, viewAllMessages: true, manageTemplates: true,
+      },
+    },
+    "Headmaster": {
+      academic: {
+        create: true, read: true, update: true, delete: true,
+        manageStudents: true, manageClasses: true, manageSubjects: true,
+        manageGrades: true, manageExams: true, managePromotions: true,
+        approve: true,
+      },
+      student: {
+        create: true, read: true, update: true,
+        viewAll: true, manageAdmission: true, manageProfile: true,
+        manageAttendance: true, manageDiscipline: true, manageMedical: true,
+        manageFees: true, exportData: true,
+      },
+      attendance: {
+        create: true, read: true, update: true, delete: true,
+        markDaily: true, viewAll: true, override: true, approve: true,
+        generateReports: true, exportReports: true, manageHolidays: true,
+      },
+      announcements: {
+        create: true, read: true, update: true, delete: true,
+        publish: true, targetAll: true, targetSpecific: true,
+        manageComments: true, moderate: true, sendNotifications: true,
+        viewAnalytics: true,
+      },
+      financial: {
+        create: true, read: true, update: true,
+        manageFees: true, managePayments: true, manageInvoices: true,
+        manageScholarships: true, generateReports: true, approveTransactions: true,
+        exportData: true, viewAllFinancial: true,
+      },
+      user: {
+        read: true, viewAll: true, resetPasswords: true,
+      },
+      system: {
+        manageSchool: true, manageAcademicYear: true,
+        manageTerms: true, manageGradingSystem: true, manageCurriculum: true,
+        manageHolidays: true, viewLogs: true, manageReports: true,
+      },
+      reports: {
+        viewAll: true, generateReports: true, exportReports: true,
+        viewAnalytics: true, manageDashboards: true, viewSystemStats: true,
+      },
+      communication: {
+        sendMessages: true, sendEmails: true, sendSMS: true,
+        manageNotifications: true, viewAllMessages: true,
+      },
+    },
+    "Proprietor": {
+      academic: {
+        read: true, approve: true,
+        manageStudents: true, manageGrades: true, manageExams: true,
+        managePromotions: true,
+      },
+      student: {
+        read: true, viewAll: true, manageFees: true, exportData: true,
+      },
+      attendance: {
+        read: true, viewAll: true, override: true, approve: true,
+        generateReports: true, exportReports: true,
+      },
+      announcements: {
+        create: true, read: true, update: true, delete: true,
+        publish: true, targetAll: true, targetSpecific: true,
+        sendNotifications: true, viewAnalytics: true,
+      },
+      financial: {
+        read: true, update: true,
+        manageFees: true, managePayments: true, generateReports: true,
+        approveTransactions: true, viewAllFinancial: true, exportData: true,
+      },
+      user: {
+        read: true, viewAll: true,
+      },
+      system: {
+        manageSchool: true, viewLogs: true, manageReports: true,
+      },
+      reports: {
+        viewAll: true, generateReports: true, exportReports: true,
+        viewAnalytics: true, manageDashboards: true, viewSystemStats: true,
+      },
+      communication: {
+        sendMessages: true, sendEmails: true, sendSMS: true,
+        manageNotifications: true, viewAllMessages: true,
+      },
+    },
     "Teacher": {
       academic: {
         read: true, update: true, manageGrades: true, manageExams: true,
@@ -395,6 +553,7 @@ rolePermissionSchema.statics.createDefaultPermissions = async function () {
         create: true, read: true, update: true,
         manageFees: true, managePayments: true, manageInvoices: true,
         manageScholarships: true, generateReports: true, approveTransactions: true,
+        receivePayments: true, generateReceipts: true, viewAssignedReports: true,
         exportData: true,
       },
       student: {
@@ -403,6 +562,33 @@ rolePermissionSchema.statics.createDefaultPermissions = async function () {
       reports: {
         viewAll: true, generateReports: true, exportReports: true,
         viewAnalytics: true,
+      },
+      announcements: {
+        create: true, read: true, update: true, publish: true,
+        targetAll: true, targetSpecific: true,
+      },
+      communication: {
+        sendMessages: true, sendEmails: true, sendSMS: true,
+        manageNotifications: true, viewAllMessages: true,
+      },
+    },
+    "Accounts Officer": {
+      financial: {
+        create: true, read: true,
+        managePayments: true,
+        receivePayments: true,
+        generateReceipts: true,
+        viewAssignedReports: true,
+      },
+      student: {
+        read: true,
+      },
+      reports: {
+        generateReports: true,
+      },
+      communication: {
+        sendMessages: true,
+        manageNotifications: true,
       },
     },
     "Parent": {

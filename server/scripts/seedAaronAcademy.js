@@ -186,6 +186,7 @@ async function main() {
       password: "Acct@12345",
       status: "active",
       schoolId: school._id,
+      secondaryRoles: ["accounts officer"],
     }),
     User.create({
       name: "Abena Darko",
