@@ -266,20 +266,29 @@ const SchedulesTab = () => {
   const [error, setError] = useState('');
   const [publishing, setPublishing] = useState(null);
 
+  // Load fee components separately — must succeed even if other data fails
+  const loadComponents = useCallback(async () => {
+    try {
+      const res = await apiService.get('/api/admin/fees/components');
+      const compList = Array.isArray(res?.data) ? res.data : (Array.isArray(res) ? res : []);
+      setComponents(compList.filter(c => c.isActive !== false));
+    } catch (err) {
+      console.warn('Fee components load failed:', err);
+      setComponents([]);
+    }
+  }, []);
+
   const load = useCallback(async () => {
     setLoading(true);
     setError('');
     try {
-      const [schedulesRes, componentsRes, yearsRes, termsRes, classesRes] = await Promise.all([
+      const [schedulesRes, yearsRes, termsRes, classesRes] = await Promise.all([
         apiService.get('/api/admin/fees/schedules').catch(e => { console.warn('schedules load failed:', e); return []; }),
-        apiService.get('/api/admin/fees/components').catch(e => { console.warn('components load failed:', e); return { data: [] }; }),
         apiService.get('/api/academic-years').catch(() => []),
         apiService.get('/api/terms').catch(() => []),
         apiService.get('/api/school-setup/classes').catch(() => []),
       ]);
       setSchedules(Array.isArray(schedulesRes) ? schedulesRes : []);
-      const compList = Array.isArray(componentsRes?.data) ? componentsRes.data : (Array.isArray(componentsRes) ? componentsRes : []);
-      setComponents(compList.filter(c => c.isActive !== false));
       const yearsList = Array.isArray(yearsRes) ? yearsRes : [];
       setAcademicYears(yearsList);
       setTerms(Array.isArray(termsRes) ? termsRes : []);
@@ -298,7 +307,7 @@ const SchedulesTab = () => {
     setLoading(false);
   }, []);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { loadComponents(); load(); }, [loadComponents, load]);
 
   const addFeeRow = () => {
     setForm(prev => ({
