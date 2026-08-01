@@ -47,37 +47,30 @@ const StudentsContainer = () => {
 
   /** Load classes and academic years for the student form dropdowns */
   const fetchSetupData = async () => {
-    // Fetch classes and years independently — one failing should not block the other
-    let classesLoaded = false;
+    // Fetch from BOTH class systems and merge — admin may create in either
+    const allClasses = new Map(); // _id -> class object (deduped by _id)
+
     try {
-      const classesRes = await apiService.get('/api/school-setup/classes');
-      const rawClasses = classesRes && classesRes.classes
-        ? classesRes.classes
-        : Array.isArray(classesRes)
-        ? classesRes
-        : [];
-      if (rawClasses.length > 0) {
-        setClassesList(rawClasses);
-        classesLoaded = true;
-      }
+      const ghanaRes = await apiService.get('/api/school-setup/classes');
+      const ghanaClasses = ghanaRes && ghanaRes.classes
+        ? ghanaRes.classes
+        : Array.isArray(ghanaRes) ? ghanaRes : [];
+      ghanaClasses.forEach((c) => allClasses.set(c._id, c));
     } catch (err) {
-      console.warn('Could not load classes from /api/school-setup/classes:', err?.message || err);
+      console.warn('Could not load GhanaClass list:', err?.message || err);
     }
 
-    // Fallback: try the generic /api/classes endpoint if school-setup returned nothing
-    if (!classesLoaded) {
-      try {
-        const altRes = await apiService.get('/api/classes');
-        const altClasses = Array.isArray(altRes) ? altRes : altRes?.classes || [];
-        if (altClasses.length > 0) {
-          setClassesList(altClasses);
-          classesLoaded = true;
-        }
-      } catch (_) { /* second fallback also failed */ }
-    }
+    try {
+      const legacyRes = await apiService.get('/api/classes');
+      const legacyClasses = Array.isArray(legacyRes) ? legacyRes : legacyRes?.classes || [];
+      legacyClasses.forEach((c) => allClasses.set(c._id, c));
+    } catch (_) { /* legacy endpoint unavailable */ }
 
-    // Last resort: use hardcoded GES class levels so the dropdown is never empty
-    if (!classesLoaded) {
+    const merged = [...allClasses.values()];
+    if (merged.length > 0) {
+      setClassesList(merged);
+    } else {
+      // Hardcoded GES fallback so the dropdown is never completely empty
       setClassesList(GES_CLASS_LEVELS.map((name, idx) => ({ _id: `ges-fallback-${idx}`, name })));
     }
 
