@@ -8,6 +8,7 @@ import {
   getRefreshToken,
   removeRefreshToken,
 } from "../lib/authStorage";
+import { getUserRoles } from "../lib/rbac";
 
 /**
  * Enhanced Authentication Service
@@ -231,24 +232,23 @@ class AuthService {
    * Check if user has specific role
    */
   hasRole(role) {
-    const user = getUser();
-    return user && user.role === role;
+    return getUserRoles().includes(role);
   }
 
   /**
    * Check if user has any of the specified roles
    */
   hasAnyRole(roles) {
-    const user = getUser();
-    return user && roles.includes(user.role);
+    const effective = getUserRoles();
+    return roles.some((r) => effective.includes(r));
   }
 
   /**
    * Check if user has all specified roles
    */
   hasAllRoles(roles) {
-    const user = getUser();
-    return user && roles.every((role) => user.role === role);
+    const effective = getUserRoles();
+    return roles.every((r) => effective.includes(r));
   }
 
   /**

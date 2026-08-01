@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api"
 import { getUserFromToken } from "../lib/authStorage";
+import { hasRole } from "../lib/rbac";
 
 const PaymentsManagement = () => {
   const [payments, setPayments] = useState([]);
@@ -31,7 +32,7 @@ const PaymentsManagement = () => {
   const navigate = useNavigate();
   const user = getUserFromToken();
   const canManage =
-    user && (user.role === "admin" || user.role === "accounts officer");
+    user && hasRole(["admin", "school admin", "super admin", "accounts officer", "accountant"]);
 
   useEffect(() => {
     fetchInitialData();

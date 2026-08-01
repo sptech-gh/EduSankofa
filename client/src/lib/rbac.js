@@ -331,17 +331,52 @@ export const hasPermission = (permission) => {
 };
 
 /**
+ * Get all effective roles for the current user.
+ * Includes primary role, secondary (cross-role) permissions, and
+ * admin/school admin equivalence.
+ */
+export const getUserRoles = () => {
+  try {
+    const userStr = localStorage.getItem("user");
+    if (!userStr) return [];
+
+    const user = JSON.parse(userStr);
+    const normalize = (value) =>
+      String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+
+    const roles = new Set([normalize(user.role)]);
+
+    if (Array.isArray(user.secondaryRoles) && user.secondaryRoles.length > 0) {
+      user.secondaryRoles.forEach((r) => roles.add(normalize(r)));
+    }
+
+    // Admin/School Admin are interchangeable in authorization checks
+    const normalized = [...roles];
+    if (normalized.includes("admin")) roles.add("school admin");
+    if (normalized.includes("school admin")) roles.add("admin");
+
+    return [...roles];
+  } catch (error) {
+    console.error("Error getting user roles:", error);
+    return [];
+  }
+};
+
+/**
  * Check if user has any of the specified roles
  */
 export const hasRole = (roles) => {
-  const userRole = getUserRole();
-  if (!userRole) return false;
+  const effectiveRoles = getUserRoles();
+  if (effectiveRoles.length === 0) return false;
 
   if (Array.isArray(roles)) {
-    return roles.includes(userRole);
+    return roles.some((r) => effectiveRoles.includes(r));
   }
 
-  return userRole === roles;
+  return effectiveRoles.includes(roles);
 };
 
 /**

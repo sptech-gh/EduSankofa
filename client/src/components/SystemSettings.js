@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiService from "../services/api";
 import { getUserFromToken } from "../lib/authStorage";
 import { downloadFile } from "../services/download";
+import { hasRole } from "../lib/rbac";
 
 const SystemSettings = () => {
   const [activeTab, setActiveTab] = useState("backup");
@@ -20,7 +21,7 @@ const SystemSettings = () => {
 
   const navigate = useNavigate();
   const user = getUserFromToken();
-  const canManage = user && user.role === "admin";
+  const canManage = user && hasRole(["admin", "school admin", "super admin"]);
 
   useEffect(() => {
     if (activeTab === "backup") {

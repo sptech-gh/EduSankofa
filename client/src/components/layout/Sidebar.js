@@ -15,14 +15,21 @@ const getCurrentUser = () => {
     const raw = localStorage.getItem("user");
     if (!raw) return null;
     const u = JSON.parse(raw);
-    return { ...u, role: normalizeRole(u.role || "") };
+    return {
+      ...u,
+      role: normalizeRole(u.role || ""),
+      secondaryRoles: Array.isArray(u.secondaryRoles)
+        ? u.secondaryRoles.map(normalizeRole)
+        : [],
+    };
   } catch (_) { return null; }
 };
 
 const getRoleLabel = (role) => {
   const map = {
     "admin": "Administrator", "school admin": "School Admin",
-    "super admin": "Super Admin", "staff": "Staff Member",
+    "super admin": "Super Admin", "headmaster": "Headmaster", "proprietor": "Proprietor",
+    "staff": "Staff Member",
     "teacher": "Teacher", "accountant": "Accountant",
     "accounts officer": "Accounts Officer", "parent": "Parent", "student": "Student",
   };
@@ -36,9 +43,24 @@ const ACCOUNTANT_ONLY = ["accountant", "accounts officer"];
 const ACADEMIC_ROLES = ["admin", "school admin", "super admin", "headmaster", "proprietor", "staff", "teacher"];
 const SETUP_ROLES = ["admin", "school admin", "super admin", "staff"];
 
-const isAllowed = (allowedRoles, userRole) => {
+// Expand a user's effective roles: primary + secondary (cross-role) + equivalence
+const expandUserRoles = (userRole, secondaryRoles = []) => {
+  const roles = new Set([normalizeRole(userRole)]);
+  (secondaryRoles || []).forEach((r) => roles.add(normalizeRole(r)));
+
+  // Admin/School Admin are interchangeable in authorization checks
+  const normalized = [...roles];
+  if (normalized.includes("admin")) roles.add("school admin");
+  if (normalized.includes("school admin")) roles.add("admin");
+
+  return [...roles];
+};
+
+const isAllowed = (allowedRoles, userRole, secondaryRoles = []) => {
   if (!allowedRoles) return true;
-  return allowedRoles.map(r => normalizeRole(r)).includes(userRole);
+  const allowed = allowedRoles.map(r => normalizeRole(r));
+  const effective = expandUserRoles(userRole, secondaryRoles);
+  return effective.some(r => allowed.includes(r));
 };
 
 // ─── Navigation definition ─────────────────────────────────────────────────────
@@ -308,6 +330,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile }) => {
 
   const currentUser = useMemo(() => getCurrentUser(), []);
   const userRole = currentUser?.role || "";
+  const userSecondaryRoles = currentUser?.secondaryRoles || [];
   const navigation = useMemo(() => buildNavigation(userRole), [userRole]);
 
   const toggleSection = (key) => {
@@ -315,8 +338,8 @@ const Sidebar = ({ isOpen, onToggle, isMobile }) => {
   };
 
   const visibleSections = navigation.filter(section => {
-    if (!isAllowed(section.allowedRoles, userRole)) return false;
-    return section.items.some(item => isAllowed(item.allowedRoles, userRole));
+    if (!isAllowed(section.allowedRoles, userRole, userSecondaryRoles)) return false;
+    return section.items.some(item => isAllowed(item.allowedRoles, userRole, userSecondaryRoles));
   });
 
   return (
@@ -370,7 +393,7 @@ const Sidebar = ({ isOpen, onToggle, isMobile }) => {
         {/* Navigation */}
         <nav className="flex-1 px-4 py-4 space-y-4 overflow-y-auto">
           {visibleSections.map((section) => {
-            const visibleItems = section.items.filter(item => isAllowed(item.allowedRoles, userRole));
+            const visibleItems = section.items.filter(item => isAllowed(item.allowedRoles, userRole, userSecondaryRoles));
             if (visibleItems.length === 0) return null;
 
             return (

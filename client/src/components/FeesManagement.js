@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api"
 import { getUserFromToken } from "../lib/authStorage";
+import { hasRole } from "../lib/rbac";
 
 const FeesManagement = () => {
   const [fees, setFees] = useState([]);
@@ -31,7 +32,7 @@ const FeesManagement = () => {
 
   const user = getUserFromToken();
   const canManage =
-    user && (user.role === "admin" || user.role === "accounts officer");
+    user && hasRole(["admin", "school admin", "super admin", "accounts officer", "accountant"]);
 
   useEffect(() => {
     fetchInitialData();
@@ -307,13 +308,13 @@ const FeesManagement = () => {
             </select>
           </div>
           <div className="form-group">
-            <label>Semester:</label>
+            <label>Term:</label>
             <select
               name="semester"
               value={filters.semester}
               onChange={handleFilterChange}
             >
-              <option value="">All Semesters</option>
+              <option value="">All Terms</option>
               <option value="First Term">First Term</option>
               <option value="Second Term">Second Term</option>
               <option value="Third Term">Third Term</option>
@@ -431,7 +432,7 @@ const FeesManagement = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Semester
+                  Term
                 </label>
                 <select
                   name="semester"
@@ -439,7 +440,7 @@ const FeesManagement = () => {
                   onChange={handleFormChange}
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="">Select Semester</option>
+                  <option value="">Select Term</option>
                   <option value="First Term">First Term</option>
                   <option value="Second Term">Second Term</option>
                   <option value="Third Term">Third Term</option>

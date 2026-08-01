@@ -285,22 +285,28 @@ const authorizeRoles = (...roles) => {
         .replace(/[\-_]+/g, " ")
         .replace(/\s+/g, " ");
 
-    // Primary role + secondary (cross-role) permissions
-    const userRoles = [req.user.role];
+    // Expand user's effective roles:
+    // 1. Primary role
+    // 2. Secondary (cross-role) permissions
+    // 3. Role equivalence: "school admin" counts as "admin" and vice versa
+    const effectiveRoles = new Set([req.user.role]);
 
-    // Include secondaryRoles if present (e.g., accountant granted accounts officer)
     if (Array.isArray(req.user.secondaryRoles) && req.user.secondaryRoles.length > 0) {
-      userRoles.push(...req.user.secondaryRoles);
+      req.user.secondaryRoles.forEach((r) => effectiveRoles.add(r));
     }
 
-    // Normalize all user roles
-    const normalizedUserRoles = userRoles.map((r) => normalizeRole(r));
+    // Admin/School Admin are interchangeable in authorization checks
+    const normalizedEffective = [...effectiveRoles].map(normalizeRole);
+    if (normalizedEffective.includes("admin")) effectiveRoles.add("school admin");
+    if (normalizedEffective.includes("school admin")) effectiveRoles.add("admin");
+
+    const normalizedUserRoles = [...effectiveRoles].map(normalizeRole);
     const allowedRoles = roles.map((r) => normalizeRole(r));
 
     const hasAccess = normalizedUserRoles.some((ur) => allowedRoles.includes(ur));
 
     if (!hasAccess) {
-      if (userRoles.includes("student") && req.method !== "GET" && (req.url.includes("attendance") || (req.originalUrl && req.originalUrl.includes("attendance")))) {
+      if (req.user.role === "student" && req.method !== "GET" && (req.url.includes("attendance") || (req.originalUrl && req.originalUrl.includes("attendance")))) {
         return res.status(403).json({
           message: "Access denied: students have limited permissions",
           code: "STUDENT_PERMISSION_DENIED",

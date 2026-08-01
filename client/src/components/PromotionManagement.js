@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api"
 import { getUserFromToken } from "../lib/authStorage";
+import { hasRole } from "../lib/rbac";
 
 const PromotionManagement = () => {
   const [academicYears, setAcademicYears] = useState([]);
@@ -21,7 +22,7 @@ const PromotionManagement = () => {
 
   const navigate = useNavigate();
   const user = getUserFromToken();
-  const canManage = user && (user.role === "admin" || user.role === "staff");
+  const canManage = user && hasRole(["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]);
 
   useEffect(() => {
     fetchInitialData();
@@ -347,7 +348,7 @@ const PromotionManagement = () => {
                 {promotionResults.map((result) => (
                   <tr key={result.studentId}>
                     <td>{result.studentName}</td>
-                    <td>{result.currentClass}</td>
+                    <td>{result.currentClass?.name || result.currentClass}</td>
                     <td>{result.currentGrade}</td>
                     <td>{result.nextGrade || "Terminal"}</td>
                     <td>{result.averageScore || "N/A"}</td>

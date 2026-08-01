@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import apiService from "../services/api"
 import { getUserFromToken } from "../lib/authStorage";
+import { hasRole } from "../lib/rbac";
 
 function Announcements() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Announcements() {
   const [announcements, setAnnouncements] = useState([]);
 
   const user = useMemo(() => getUserFromToken(), []);
-  const canCreate = user && (user.role === "admin" || user.role === "staff");
+  const canCreate = user && hasRole(["admin", "school admin", "super admin", "headmaster", "proprietor", "staff", "accountant", "accounts officer"]);
 
   const [form, setForm] = useState({
     title: "",

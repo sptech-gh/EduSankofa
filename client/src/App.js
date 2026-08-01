@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context";
 import { AppProviders } from "./components/edusankofa/providers/AppProviders";
+import { hasRole } from "./lib/rbac";
 
 // Import pages
 import { LoginPage, SignupPage, ForgotPasswordPage, ChangePasswordPage } from "./pages/auth";
@@ -105,7 +106,7 @@ const ProtectedRoute = ({ children, roles = [] }) => {
     roles &&
     roles.length > 0 &&
     user &&
-    !roles.map(normalizeRole).includes(normalizeRole(user.role))
+    !hasRole(roles)
   ) {
     return <Navigate to="/not-authorized" replace />;
   }

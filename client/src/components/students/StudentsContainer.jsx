@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getToken, getUserFromToken } from '../../lib/authStorage';
+import { hasRole } from '../../lib/rbac';
 import { useStudents } from '../../hooks/useStudents';
 import { validateStudentStep, emptyStudentForm, normalizeStudentForForm } from '../../utils/studentValidation';
 import StudentsTable from './StudentsTable';
 import StudentForm from './StudentForm';
 import StudentModal from './StudentModal';
+import apiService from '../../services/api';
 
 const StudentsContainer = () => {
   const navigate = useNavigate();
@@ -26,10 +28,46 @@ const StudentsContainer = () => {
   const [formData, setFormData] = useState(emptyStudentForm());
   const [formError, setFormError] = useState('');
 
+  // Classes and academic years loaded from DB for dropdowns
+  const [classesList, setClassesList] = useState([]);
+  const [academicYearsList, setAcademicYearsList] = useState([]);
+  const [schoolConfig, setSchoolConfig] = useState({});
+
   const user = getUserFromToken();
   const canManage = useMemo(() => {
-    return user && ['admin', 'staff'].includes(user.role);
+    return user && hasRole(['admin', 'school admin', 'super admin', 'headmaster', 'proprietor', 'staff']);
   }, [user]);
+
+  /** Load classes and academic years for the student form dropdowns */
+  const fetchSetupData = async () => {
+    try {
+      const [classesRes, yearsRes] = await Promise.all([
+        apiService.get('/api/school-setup/classes'),
+        apiService.get('/api/academic-years'),
+      ]);
+
+      // Classes endpoint may return { classes: [...] } or raw array
+      const rawClasses = classesRes && classesRes.classes
+        ? classesRes.classes
+        : Array.isArray(classesRes)
+        ? classesRes
+        : [];
+      setClassesList(rawClasses);
+
+      setAcademicYearsList(Array.isArray(yearsRes) ? yearsRes : []);
+    } catch (_) {
+      // Non-fatal — form can still be used, just without dynamic dropdowns
+    }
+  };
+
+  const fetchSchoolConfig = async () => {
+    try {
+      const config = await apiService.get('/api/school-profile');
+      setSchoolConfig(config && typeof config === 'object' ? config : {});
+    } catch (_) {
+      setSchoolConfig({});
+    }
+  };
 
   useEffect(() => {
     const token = getToken();
@@ -37,26 +75,21 @@ const StudentsContainer = () => {
       navigate('/login');
       return;
     }
-
     fetchStudents();
+    fetchSetupData();
+    fetchSchoolConfig();
   }, [navigate, fetchStudents]);
 
   const handleInputChange = useCallback((e, section = null) => {
-    const { name, value } = e.target;
-
+    const { name, value, type, checked } = e.target;
+    const nextValue = type === 'checkbox' ? checked : value;
     if (section) {
       setFormData((prev) => ({
         ...prev,
-        [section]: {
-          ...prev[section],
-          [name]: value,
-        },
+        [section]: { ...prev[section], [name]: nextValue },
       }));
     } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      setFormData((prev) => ({ ...prev, [name]: nextValue }));
     }
   }, []);
 
@@ -67,6 +100,7 @@ const StudentsContainer = () => {
       setFormError('');
     } else {
       setFormError(valResult.error);
+      alert("Please fill in all required fields before proceeding.");
     }
   }, [formData, currentStep]);
 
@@ -83,21 +117,27 @@ const StudentsContainer = () => {
   }, []);
 
   const handleSubmit = useCallback(async () => {
-    const valResult = validateStudentStep(formData, 7);
+    const valResult = validateStudentStep(formData, 6);
     if (!valResult.isValid) {
       setFormError(valResult.error);
+      alert("Please fill in all required fields before proceeding.");
       return;
     }
 
     try {
       setFormError('');
-      
+      const payload = {
+        ...formData,
+        documents: Object.entries(formData.documentChecklist || {}).map(([documentType, submitted]) => ({
+          documentType,
+          submitted,
+        })),
+      };
       if (editingStudent) {
-        await updateStudent(editingStudent._id, formData);
+        await updateStudent(editingStudent._id, payload);
       } else {
-        await createStudent(formData);
+        await createStudent(payload);
       }
-
       handleCloseModal();
     } catch (err) {
       setFormError(err && err.message ? err.message : 'Server error');
@@ -106,7 +146,6 @@ const StudentsContainer = () => {
 
   const handleEdit = useCallback(async (student) => {
     if (!canManage) return;
-
     try {
       setFormError('');
       const fullStudent = await getStudentById(student._id);
@@ -121,11 +160,7 @@ const StudentsContainer = () => {
 
   const handleDelete = useCallback(async (id) => {
     if (!canManage) return;
-
-    if (!window.confirm('Are you sure you want to delete this student?')) {
-      return;
-    }
-
+    if (!window.confirm('Are you sure you want to delete this student?')) return;
     try {
       await deleteStudent(id);
     } catch (err) {
@@ -135,7 +170,6 @@ const StudentsContainer = () => {
 
   const handleOpenModal = useCallback(() => {
     if (!canManage) return;
-    
     setEditingStudent(null);
     setFormData(emptyStudentForm());
     setCurrentStep(1);
@@ -147,12 +181,14 @@ const StudentsContainer = () => {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">Students Management</h1>
+        <div className="flex items-center space-x-4">
+          <button onClick={() => navigate('/dashboard')} className="btn btn-ghost">
+            ← Back to Dashboard
+          </button>
+          <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">Students Management</h1>
+        </div>
         {canManage && (
-          <button
-            onClick={handleOpenModal}
-            className="btn btn-primary"
-          >
+          <button onClick={handleOpenModal} className="btn btn-primary">
             Add New Student
           </button>
         )}
@@ -160,9 +196,7 @@ const StudentsContainer = () => {
 
       {/* Error Display */}
       {formError && (
-        <div className="alert alert-error mb-6">
-          {formError}
-        </div>
+        <div className="alert alert-error mb-6">{formError}</div>
       )}
 
       {/* Students Table */}
@@ -191,6 +225,9 @@ const StudentsContainer = () => {
           onCancel={handleCloseModal}
           isEditing={!!editingStudent}
           error={formError}
+          classesList={classesList}
+          academicYearsList={academicYearsList}
+          schoolConfig={schoolConfig}
         />
       </StudentModal>
     </div>

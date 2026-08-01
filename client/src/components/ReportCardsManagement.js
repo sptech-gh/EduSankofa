@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import apiService from "../services/api";
 import { getUserFromToken } from "../lib/authStorage";
 import { api } from "../services/api";
+import { hasRole } from "../lib/rbac";
 
 const ReportCardsManagement = () => {
   const [reportCards, setReportCards] = useState([]);
@@ -30,7 +31,7 @@ const ReportCardsManagement = () => {
   const user = getUserFromToken();
   const canManage =
     user &&
-    (user.role === "admin" || user.role === "staff" || user.role === "teacher");
+    hasRole(["admin", "school admin", "super admin", "headmaster", "proprietor", "staff", "teacher"]);
 
   useEffect(() => {
     fetchInitialData();
