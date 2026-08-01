@@ -258,16 +258,16 @@ async function main() {
   // 4. CLASSES
   console.log("4️⃣  Creating Classes...");
   const classData = [
-    { name: "KG 1", level: "KG1", section: "A" },
-    { name: "Basic 1", level: "BASIC1", section: "A" },
-    { name: "Basic 2", level: "BASIC2", section: "A" },
-    { name: "Basic 3", level: "BASIC3", section: "A" },
-    { name: "Basic 4", level: "BASIC4", section: "A" },
-    { name: "Basic 5", level: "BASIC5", section: "A" },
-    { name: "Basic 6", level: "BASIC6", section: "A" },
-    { name: "JHS 1", level: "JHS1", section: "A" },
-    { name: "JHS 2", level: "JHS2", section: "A" },
-    { name: "JHS 3", level: "JHS3", section: "A" },
+    { name: "KG 1", level: "KG 1", section: "A" },
+    { name: "Primary 1", level: "Primary 1", section: "A" },
+    { name: "Primary 2", level: "Primary 2", section: "A" },
+    { name: "Primary 3", level: "Primary 3", section: "A" },
+    { name: "Primary 4", level: "Primary 4", section: "A" },
+    { name: "Primary 5", level: "Primary 5", section: "A" },
+    { name: "Primary 6", level: "Primary 6", section: "A" },
+    { name: "JHS 1", level: "JHS 1", section: "A" },
+    { name: "JHS 2", level: "JHS 2", section: "A" },
+    { name: "JHS 3", level: "JHS 3", section: "A" },
   ];
 
   const classes = [];
@@ -314,16 +314,16 @@ async function main() {
   // 7. FEE SCHEDULES (per class level)
   console.log("7️⃣  Creating Fee Schedules...");
   const classFeeAmounts = {
-    KG1: 80000,    // GHS 800
-    BASIC1: 100000, // GHS 1,000
-    BASIC2: 100000,
-    BASIC3: 120000, // GHS 1,200
-    BASIC4: 120000,
-    BASIC5: 130000, // GHS 1,300
-    BASIC6: 130000,
-    JHS1: 150000,   // GHS 1,500
-    JHS2: 150000,
-    JHS3: 180000,   // GHS 1,800
+    "KG 1": 80000,    // GHS 800
+    "Primary 1": 100000, // GHS 1,000
+    "Primary 2": 100000,
+    "Primary 3": 120000, // GHS 1,200
+    "Primary 4": 120000,
+    "Primary 5": 130000, // GHS 1,300
+    "Primary 6": 130000,
+    "JHS 1": 150000,   // GHS 1,500
+    "JHS 2": 150000,
+    "JHS 3": 180000,   // GHS 1,800
   };
 
   const schedules = [];
@@ -428,7 +428,7 @@ async function main() {
       studentId: student._id,
       academicYear: academicYear._id,
       term: currentTerm.order,
-      classCode: cls?.level || "BASIC1",
+      classCode: cls?.level || "Primary 1",
       lineItems,
       totalOriginalPesewas: totalFinalPesewas,
       totalDiscountPesewas: 0,

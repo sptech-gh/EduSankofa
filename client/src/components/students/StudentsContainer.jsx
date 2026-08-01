@@ -9,6 +9,13 @@ import StudentForm from './StudentForm';
 import StudentModal from './StudentModal';
 import apiService from '../../services/api';
 
+// GES Basic School class levels (Creche through JHS 3) — used as fallback dropdown options
+const GES_CLASS_LEVELS = [
+  "Creche", "Nursery 1", "Nursery 2", "KG 1", "KG 2",
+  "Primary 1", "Primary 2", "Primary 3", "Primary 4", "Primary 5", "Primary 6",
+  "JHS 1", "JHS 2", "JHS 3",
+];
+
 const StudentsContainer = () => {
   const navigate = useNavigate();
   const {
@@ -40,23 +47,45 @@ const StudentsContainer = () => {
 
   /** Load classes and academic years for the student form dropdowns */
   const fetchSetupData = async () => {
+    // Fetch classes and years independently — one failing should not block the other
+    let classesLoaded = false;
     try {
-      const [classesRes, yearsRes] = await Promise.all([
-        apiService.get('/api/school-setup/classes'),
-        apiService.get('/api/academic-years'),
-      ]);
-
-      // Classes endpoint may return { classes: [...] } or raw array
+      const classesRes = await apiService.get('/api/school-setup/classes');
       const rawClasses = classesRes && classesRes.classes
         ? classesRes.classes
         : Array.isArray(classesRes)
         ? classesRes
         : [];
-      setClassesList(rawClasses);
+      if (rawClasses.length > 0) {
+        setClassesList(rawClasses);
+        classesLoaded = true;
+      }
+    } catch (err) {
+      console.warn('Could not load classes from /api/school-setup/classes:', err?.message || err);
+    }
 
+    // Fallback: try the generic /api/classes endpoint if school-setup returned nothing
+    if (!classesLoaded) {
+      try {
+        const altRes = await apiService.get('/api/classes');
+        const altClasses = Array.isArray(altRes) ? altRes : altRes?.classes || [];
+        if (altClasses.length > 0) {
+          setClassesList(altClasses);
+          classesLoaded = true;
+        }
+      } catch (_) { /* second fallback also failed */ }
+    }
+
+    // Last resort: use hardcoded GES class levels so the dropdown is never empty
+    if (!classesLoaded) {
+      setClassesList(GES_CLASS_LEVELS.map((name, idx) => ({ _id: `ges-fallback-${idx}`, name })));
+    }
+
+    try {
+      const yearsRes = await apiService.get('/api/academic-years');
       setAcademicYearsList(Array.isArray(yearsRes) ? yearsRes : []);
-    } catch (_) {
-      // Non-fatal — form can still be used, just without dynamic dropdowns
+    } catch (err) {
+      console.warn('Could not load academic years:', err?.message || err);
     }
   };
 
