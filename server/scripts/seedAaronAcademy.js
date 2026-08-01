@@ -301,13 +301,13 @@ async function main() {
   // 6. FEE COMPONENTS
   console.log("6️⃣  Creating Fee Components...");
   const feeComponents = await Promise.all([
-    FeeComponent.create({ name: "Tuition", code: "TUITION", category: "TUITION", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "Feeding", code: "FEEDING", category: "FEEDING", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "ICT Fee", code: "ICT", category: "ICT", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "Library Fee", code: "LIBRARY", category: "LIBRARY", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "PTA Levy", code: "PTA", category: "PTA", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "Development Levy", code: "DEV", category: "DEVELOPMENT", isRequired: true, schoolId: school._id }),
-    FeeComponent.create({ name: "Sports Fee", code: "SPORTS", category: "SPORTS", isRequired: false, schoolId: school._id }),
+    FeeComponent.create({ name: "Tuition", code: "TUITION", category: "TUITION", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "Feeding", code: "FEEDING", category: "FEEDING", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "ICT Fee", code: "ICT", category: "ICT", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "Library Fee", code: "LIBRARY", category: "LIBRARY", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "PTA Levy", code: "PTA", category: "PTA", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "Development Levy", code: "DEV", category: "DEVELOPMENT_LEVY", billingCycle: "PER_TERM", isRequired: true, schoolId: school._id }),
+    FeeComponent.create({ name: "Sports Fee", code: "SPORTS", category: "SPORTS", billingCycle: "PER_TERM", isRequired: false, schoolId: school._id }),
   ]);
   console.log(`   ✔ Created ${feeComponents.length} fee components\n`);
 

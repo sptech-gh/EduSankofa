@@ -268,10 +268,11 @@ const SchedulesTab = () => {
 
   const load = useCallback(async () => {
     setLoading(true);
+    setError('');
     try {
       const [schedulesRes, componentsRes, yearsRes, termsRes, classesRes] = await Promise.all([
-        apiService.get('/api/admin/fees/schedules').catch(() => []),
-        apiService.get('/api/admin/fees/components').catch(() => ({ data: [] })),
+        apiService.get('/api/admin/fees/schedules').catch(e => { console.warn('schedules load failed:', e); return []; }),
+        apiService.get('/api/admin/fees/components').catch(e => { console.warn('components load failed:', e); return { data: [] }; }),
         apiService.get('/api/academic-years').catch(() => []),
         apiService.get('/api/terms').catch(() => []),
         apiService.get('/api/school-setup/classes').catch(() => []),
@@ -290,7 +291,10 @@ const SchedulesTab = () => {
         const active = yearsList.find(y => y.isActive) || yearsList[0];
         if (active) setForm(p => ({ ...p, academicYear: active.name }));
       }
-    } catch (_) {}
+    } catch (e) {
+      console.warn('Fee schedule load error:', e);
+      setError('Failed to load data. Check console for details.');
+    }
     setLoading(false);
   }, []);
 
@@ -413,6 +417,7 @@ const SchedulesTab = () => {
               <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr auto', gap: 10, marginBottom: 10, alignItems: 'center' }}>
                 <select value={fee.feeComponentId} onChange={e => updateFeeRow(i, 'feeComponentId', e.target.value)} style={inputStyle}>
                   <option value="">Select component…</option>
+                  {components.length === 0 && <option value="" disabled>No fee components found — create them in the Fee Components tab first</option>}
                   {components.map(c => <option key={c._id} value={c._id}>{c.name} ({c.category})</option>)}
                 </select>
                 <input value={fee.amountPesewas} onChange={e => updateFeeRow(i, 'amountPesewas', e.target.value)}
