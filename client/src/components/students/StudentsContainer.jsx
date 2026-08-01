@@ -47,30 +47,22 @@ const StudentsContainer = () => {
 
   /** Load classes and academic years for the student form dropdowns */
   const fetchSetupData = async () => {
-    // Fetch from BOTH class systems and merge — admin may create in either
-    const allClasses = new Map(); // _id -> class object (deduped by _id)
-
+    // Single source of truth: GhanaClass via /api/school-setup/classes
     try {
-      const ghanaRes = await apiService.get('/api/school-setup/classes');
-      const ghanaClasses = ghanaRes && ghanaRes.classes
-        ? ghanaRes.classes
-        : Array.isArray(ghanaRes) ? ghanaRes : [];
-      ghanaClasses.forEach((c) => allClasses.set(c._id, c));
+      const classesRes = await apiService.get('/api/school-setup/classes');
+      const rawClasses = classesRes && classesRes.classes
+        ? classesRes.classes
+        : Array.isArray(classesRes)
+        ? classesRes
+        : [];
+      if (rawClasses.length > 0) {
+        setClassesList(rawClasses);
+      } else {
+        // Hardcoded GES fallback only when DB has zero classes
+        setClassesList(GES_CLASS_LEVELS.map((name, idx) => ({ _id: `ges-fallback-${idx}`, name })));
+      }
     } catch (err) {
-      console.warn('Could not load GhanaClass list:', err?.message || err);
-    }
-
-    try {
-      const legacyRes = await apiService.get('/api/classes');
-      const legacyClasses = Array.isArray(legacyRes) ? legacyRes : legacyRes?.classes || [];
-      legacyClasses.forEach((c) => allClasses.set(c._id, c));
-    } catch (_) { /* legacy endpoint unavailable */ }
-
-    const merged = [...allClasses.values()];
-    if (merged.length > 0) {
-      setClassesList(merged);
-    } else {
-      // Hardcoded GES fallback so the dropdown is never completely empty
+      console.warn('Could not load classes:', err?.message || err);
       setClassesList(GES_CLASS_LEVELS.map((name, idx) => ({ _id: `ges-fallback-${idx}`, name })));
     }
 

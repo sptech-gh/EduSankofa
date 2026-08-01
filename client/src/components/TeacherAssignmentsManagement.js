@@ -44,7 +44,7 @@ function TeacherAssignmentsManagement() {
       ] = await Promise.all([
         apiService.get("/api/academic-years"),
         apiService.get("/api/terms"),
-        apiService.get("/api/classes"),
+        apiService.get("/api/school-setup/classes"),
         apiService.get("/api/subjects"),
         apiService.get("/api/users?role=teacher"),
         apiService.get("/api/teacher-assignments"),

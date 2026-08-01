@@ -65,7 +65,7 @@ const PromotionManagement = () => {
   const fetchClasses = async (academicYearId) => {
     try {
       const classesData = await apiService.get(
-        `/api/classes?academicYear=${academicYearId}`
+        `/api/school-setup/classes?academicYear=${academicYearId}`
       );
       setClasses(Array.isArray(classesData) ? classesData : []);
     } catch (err) {

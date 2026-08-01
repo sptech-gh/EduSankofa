@@ -10,7 +10,6 @@ const mongoose = require("mongoose");
 const { auth, authorizeRoles } = require("../middleware/auth");
 const GhanaStudent = require("../models/GhanaStudent");
 const GhanaClass = require("../models/GhanaClass");
-const LegacyClass = require("../models/Class");
 const StudentLedger = require("../models/StudentLedger");
 const TeacherAssignment = require("../models/TeacherAssignment");
 const AcademicYear = require("../models/AcademicYear");
@@ -281,41 +280,11 @@ router.post(
         return res.status(400).json({ message: "Valid classId is required" });
       }
 
-      // Verify class exists — check GhanaClass first, then legacy Class, auto-sync if needed
-      let cls = await GhanaClass.findById(effectiveClassId).session(session);
-      if (!cls) {
-        // Class might exist in the legacy Class model (created via /api/classes)
-        const legacyCls = await LegacyClass.findById(effectiveClassId).session(session);
-        if (legacyCls) {
-          // Auto-sync: create a GhanaClass from the legacy Class data
-          const levelMap = {
-            "Creche": "Creche", "Nursery 1": "Nursery 1", "Nursery 2": "Nursery 2",
-            "KG1": "KG 1", "KG 2": "KG 2", "KG 1": "KG 1",
-            "Primary 1": "Primary 1", "Primary 2": "Primary 2", "Primary 3": "Primary 3",
-            "Primary 4": "Primary 4", "Primary 5": "Primary 5", "Primary 6": "Primary 6",
-            "JHS 1": "JHS 1", "JHS 2": "JHS 2", "JHS 3": "JHS 3",
-          };
-          const mappedLevel = levelMap[legacyCls.grade] || legacyCls.grade || "Primary 1";
-          const activeYear = await AcademicYear.findOne({ isActive: true }).session(session);
-          const activeTerm = await Term.findOne({ isActive: true }).session(session);
-
-          cls = await GhanaClass.create([{
-            name: legacyCls.name,
-            level: mappedLevel,
-            section: legacyCls.section || "A",
-            classTeacher: legacyCls.teacher,
-            capacity: legacyCls.capacity || 30,
-            academicYear: activeYear?._id,
-            term: activeTerm?._id,
-            isActive: true,
-          }], { session });
-          cls = cls[0];
-          effectiveClassId = cls._id;
-        }
-      }
+      // Verify class exists in GhanaClass (single source of truth)
+      const cls = await GhanaClass.findById(effectiveClassId).session(session);
       if (!cls) {
         if (session) await session.abortTransaction();
-        return res.status(404).json({ message: "Class not found" });
+        return res.status(404).json({ message: "Class not found. Please create classes in School Setup > Classes first." });
       }
 
       // Resolve academic year: req.body -> class setting -> active year in DB
