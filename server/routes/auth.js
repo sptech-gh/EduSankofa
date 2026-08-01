@@ -214,7 +214,14 @@ router.post("/register", async (req, res) => {
       role: roleToAssign,
     });
 
-    const token = signAccessToken({ userId: user._id, role: user.role, email: user.email });
+    const tokenPayload = {
+      userId: user._id,
+      role: user.role,
+      email: user.email,
+      schoolId: user.schoolId,
+      forcePasswordChange: user.forcePasswordChange,
+    };
+    const token = signAccessToken(tokenPayload);
     const refreshToken = signRefreshToken({ userId: user._id, tokenVersion: user.__v || 0 });
 
     if (!token) {
@@ -402,6 +409,7 @@ router.post("/login", async (req, res) => {
         name: user.name,
         email: user.email,
         role: user.role,
+        forcePasswordChange: !!user.forcePasswordChange,
       },
     };
 
@@ -640,7 +648,7 @@ router.put("/change-password", auth, async (req, res) => {
 
     let user;
     if (typeof User.findById === "function") {
-      user = await User.findById(req.user._id);
+      user = await User.findById(req.user._id).select("+password");
     }
     if (!user) {
       user = req.user;
@@ -664,12 +672,22 @@ router.put("/change-password", auth, async (req, res) => {
     }
 
     user.password = newPassword;
+    user.forcePasswordChange = false;
     if (typeof user.save === "function") {
       await user.save();
     }
 
+    const token = signAccessToken({
+      userId: user._id,
+      role: user.role,
+      email: user.email,
+      schoolId: user.schoolId,
+      forcePasswordChange: false,
+    });
+
     return res.json({
       message: "Password successfully changed",
+      token,
       timestamp: new Date().toISOString(),
     });
   } catch (err) {
@@ -695,7 +713,7 @@ router.all("/profile", (req, res) => {
 });
 
 // Get users list (for messaging recipients)
-router.get('/users', auth, authorizeRoles('admin', 'teacher', 'staff'), async (req, res) => {
+router.get('/users', auth, authorizeRoles('admin', 'teacher', 'staff', 'accountant', 'accounts officer'), async (req, res) => {
   try {
     const users = await User.find({ status: { $ne: "inactive" } })
       .select("name email role")
@@ -712,6 +730,86 @@ router.get('/users', auth, authorizeRoles('admin', 'teacher', 'staff'), async (r
     res.status(500).json({
       message: "Server error",
       code: "USERS_LIST_ERROR",
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
+/**
+ * @route   POST /api/auth/setup-password
+ * @desc    Complete parent account setup with one-time token
+ * @access  Public (token-protected)
+ */
+router.post("/setup-password", async (req, res) => {
+  try {
+    const { token, password } = req.body;
+
+    if (!token || !password) {
+      return res.status(400).json({
+        message: "Setup token and password are required",
+        code: "MISSING_FIELDS",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate password strength
+    if (!isStrongPassword(password)) {
+      return res.status(400).json({
+        message: "Password must be at least 8 characters with uppercase, lowercase, number, and special character",
+        code: "WEAK_PASSWORD",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Find user with valid setup token
+    const user = await User.findOne({
+      passwordSetupToken: token,
+      passwordSetupTokenExpiry: { $gt: new Date() },
+      role: "parent",
+    }).select("+password");
+
+    if (!user) {
+      return res.status(400).json({
+        message: "Invalid or expired setup token",
+        code: "INVALID_SETUP_TOKEN",
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Set password and activate account
+    user.password = password;
+    user.isActive = true;
+    user.passwordSetupToken = undefined;
+    user.passwordSetupTokenExpiry = undefined;
+    user.forcePasswordChange = false;
+    await user.save();
+
+    logger.info("Parent account setup completed", {
+      userId: user._id,
+      email: user.email,
+    });
+
+    // Generate auth token
+    const authToken = user.generateAuthToken();
+
+    res.json({
+      message: "Account setup completed successfully",
+      token: authToken,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    logger.error("Password setup error", {
+      error: err.message,
+      stack: err.stack,
+    });
+    res.status(500).json({
+      message: "Server error during account setup",
+      code: "SETUP_ERROR",
       timestamp: new Date().toISOString(),
     });
   }

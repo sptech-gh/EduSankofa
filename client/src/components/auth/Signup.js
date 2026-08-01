@@ -242,7 +242,7 @@ const Signup = () => {
             <option value="teacher">Teacher</option>
             <option value="admin">Administrator</option>
             <option value="accounts">Accounts Officer</option>
-            <option value="parent">Parent</option>
+            {/* Parent accounts are created by admin only - see /api/admin/parents/invite */}
           </select>
         </div>
 

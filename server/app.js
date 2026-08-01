@@ -78,6 +78,7 @@ app.use("/api/auth", authLimiter);
 app.use("/api/upload", uploadLimiter);
 
 // 4. Request parsing middleware
+app.use("/api/paystack/webhook", express.raw({ type: "application/json" }));
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
@@ -85,8 +86,18 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 app.use(compression());
 
 // 6. Security middleware that needs body parsing
-app.use(xssProtection);
-app.use(validateInput);
+app.use((req, res, next) => {
+  if (req.body) {
+    req.originalBody = JSON.parse(JSON.stringify(req.body));
+  }
+  next();
+});
+app.use((req, res, next) => (
+  req.originalUrl === "/api/paystack/webhook" ? next() : xssProtection(req, res, next)
+));
+app.use((req, res, next) => (
+  req.originalUrl === "/api/paystack/webhook" ? next() : validateInput(req, res, next)
+));
 
 // 7. License system initialization and middleware
 const licenseService = getInstance();
@@ -325,12 +336,46 @@ app.use("/api/leave-requests", licenseGuard.middleware(), leaveRequestsRoutes);
 const parentPortalRoutes = require("./routes/parentPortal");
 app.use("/api/parent-portal", licenseGuard.middleware(), parentPortalRoutes);
 
+// Admin parent management routes (NEW - admin-initiated parent accounts)
+const adminParentsRoutes = require("./routes/adminParents");
+app.use("/api/admin/parents", licenseGuard.middleware(), adminParentsRoutes);
+
+// Ghana Billing Module routes
+const adminFeesRoutes = require("./routes/adminFees");
+app.use("/api/admin/fees", licenseGuard.middleware(), adminFeesRoutes);
+app.use("/api/admin", licenseGuard.middleware(), adminFeesRoutes);
+
+const billingEngine = require("./routes/billingEngine");
+app.use("/api/payments", licenseGuard.middleware(), billingEngine.paymentsRouter);
+app.use("/api/bills", licenseGuard.middleware(), billingEngine.billsRouter);
+
+const paystackRoutes = require("./routes/paystack");
+app.use("/api/paystack", paystackRoutes);
+
+const expensesRoutes = require("./routes/expenses");
+app.use("/api/expenses", licenseGuard.middleware(), expensesRoutes);
+
+const financialManagementRoutes = require("./routes/financialManagement");
+app.use("/api/financial", licenseGuard.middleware(), financialManagementRoutes);
+
+const teacherPortalRoutes = require("./routes/teacherPortal");
+app.use("/api/teacher", licenseGuard.middleware(), teacherPortalRoutes);
+
+// Headmaster / Proprietor portal routes (NEW)
+const headmasterRoutes = require("./routes/headmaster");
+app.use("/api/headmaster", licenseGuard.middleware(), headmasterRoutes);
+
+// Staff Payroll routes (NEW)
+const payrollRoutes = require("./routes/payroll");
+app.use("/api/payroll", licenseGuard.middleware(), payrollRoutes);
+
+// Budget & Variance routes (NEW)
+const budgetRoutes = require("./routes/budget");
+app.use("/api/budget", licenseGuard.middleware(), budgetRoutes);
+
 // Financial management routes
 const feeRoutes = require("./routes/fees");
 app.use("/api/fees", licenseGuard.middleware(), feeRoutes);
-
-const paymentRoutes = require("./routes/payments");
-app.use("/api/payments", licenseGuard.middleware(), paymentRoutes);
 
 const invoiceRoutes = require("./routes/invoices");
 app.use("/api/invoices", licenseGuard.middleware(), invoiceRoutes);
@@ -339,8 +384,16 @@ app.use("/api/invoices", licenseGuard.middleware(), invoiceRoutes);
 const analyticsRoutes = require("./routes/analytics");
 app.use("/api/analytics", licenseGuard.middleware(), analyticsRoutes);
 
+const dashboardAnalyticsRoutes = require("./routes/dashboardAnalytics");
+app.use("/api/dashboard", licenseGuard.middleware(), dashboardAnalyticsRoutes);
+// Keep /api/accountant as an intentional alias for finance dashboard clients.
+app.use("/api/accountant", licenseGuard.middleware(), dashboardAnalyticsRoutes);
+
 const promotionRoutes = require("./routes/promotion");
 app.use("/api/promotion", licenseGuard.middleware(), promotionRoutes);
+
+const complianceReportsRoutes = require("./routes/complianceReports");
+app.use("/api/reports", complianceReportsRoutes);
 
 const auditRoutes = require("./routes/audit");
 app.use("/api/audit", licenseGuard.middleware(), auditRoutes);

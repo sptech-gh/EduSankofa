@@ -67,15 +67,18 @@ router.post(
         return res.status(404).json({ message: "Subject not found" });
       }
 
-      // Check if teacher is assigned to this subject
+      // Check if teacher is assigned to this class
       if (req.user.role === "teacher") {
         const isAssigned = await GhanaClass.findOne({
           _id: student.currentClass,
-          subjectTeachers: req.user._id,
+          $or: [
+            { classTeacher: req.user._id },
+            { assistantTeachers: req.user._id }
+          ]
         });
         
         if (!isAssigned) {
-          return res.status(403).json({ message: "Not authorized to enter scores for this subject" });
+          return res.status(403).json({ message: "Not authorized to enter scores for this class" });
         }
       }
 
@@ -217,7 +220,7 @@ router.post(
           _id: classId,
           $or: [
             { classTeacher: req.user._id },
-            { subjectTeachers: req.user._id }
+            { assistantTeachers: req.user._id }
           ]
         });
         
@@ -711,10 +714,18 @@ router.get(
         if (!student) {
           return res.status(403).json({ message: "Not authorized to view this report card" });
         }
+
+        if (!["Approved", "Published"].includes(reportCard.status)) {
+          return res.status(403).json({ message: "Report card not yet available. Awaiting Headteacher approval." });
+        }
       } else if (req.user.role === "student") {
         // Student can only view their own report card
         if (reportCard.student._id.toString() !== req.user._id.toString()) {
           return res.status(403).json({ message: "Not authorized to view this report card" });
+        }
+
+        if (!["Approved", "Published"].includes(reportCard.status)) {
+          return res.status(403).json({ message: "Report card not yet available. Awaiting Headteacher approval." });
         }
       }
 
@@ -753,7 +764,11 @@ router.get(
       const filter = { student: studentId };
       if (academicYearId) filter.academicYear = academicYearId;
       if (termId) filter.term = termId;
-      if (status) filter.status = status;
+      if (status) {
+        filter.status = status;
+      } else if (["parent", "student"].includes(req.user.role)) {
+        filter.status = { $in: ["Approved", "Published"] };
+      }
 
       const reportCards = await GhanaReportCard.find(filter)
         .populate("academicYear", "name")
@@ -831,23 +846,41 @@ router.get(
         }
       }
 
-      // Generate PDF data
-      const pdfData = reportCard.generatePDFData();
+      // Verify report card is approved and released
+      if (reportCard.status !== "Published") {
+        return res.status(403).json({ 
+          message: "Report card is not yet available for download. Status: " + reportCard.status 
+        });
+      }
 
-      // For now, return JSON data (PDF generation would require a library like puppeteer)
-      res.setHeader("Content-Type", "application/json");
-      res.json({
-        message: "PDF data ready for generation",
-        pdfData,
-        note: "Implement PDF generation using puppeteer or similar library",
-      });
+      // Get school profile
+      const SchoolProfile = require("../models/SchoolProfile");
+      const school = await SchoolProfile.findOne({ key: "default" });
+
+      if (!school) {
+        return res.status(500).json({ message: "School profile not configured" });
+      }
+
+      // Get full student object
+      const student = reportCard.student;
+
+      // Generate PDF
+      const { generateReportCardPDF } = require("../services/pdfService");
+      
+      res.setHeader("Content-Type", "application/pdf");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="ReportCard_${student.studentId}_${reportCard.termName}_${reportCard.academicYearName}.pdf"`
+      );
+
+      generateReportCardPDF(res, reportCard, school, student);
     } catch (err) {
       res.status(500).json({ message: "Server error", error: err.message });
     }
   }
 );
 
-// Generate class PDF report cards
+// Generate class PDF report cards (batch zip download)
 router.get(
   "/class/:classId/pdf-batch",
   auth,
@@ -875,14 +908,48 @@ router.get(
         .populate("class", "name level section")
         .populate("subjects.subject", "name code");
 
-      const pdfData = reportCards.map(card => card.generatePDFData());
+      if (reportCards.length === 0) {
+        return res.status(404).json({ 
+          message: "No published report cards found for this class and term" 
+        });
+      }
 
-      res.json({
-        message: "Class PDF batch data ready",
-        count: reportCards.length,
-        pdfData,
-        note: "Implement batch PDF generation using puppeteer or similar library",
-      });
+      // Get school profile
+      const SchoolProfile = require("../models/SchoolProfile");
+      const school = await SchoolProfile.findOne({ key: "default" });
+
+      if (!school) {
+        return res.status(500).json({ message: "School profile not configured" });
+      }
+
+      // For batch download, create a zip archive of all PDFs
+      const archiver = require("archiver");
+      const { generateReportCardPDF } = require("../services/pdfService");
+      const { PassThrough } = require("stream");
+
+      const archive = archiver("zip", { zlib: { level: 9 } });
+      
+      res.setHeader("Content-Type", "application/zip");
+      res.setHeader(
+        "Content-Disposition",
+        `attachment; filename="ReportCards_${reportCards[0].className}_${reportCards[0].termName}_${reportCards[0].academicYearName}.zip"`
+      );
+
+      archive.pipe(res);
+
+      // Add each report card PDF to the archive
+      for (const reportCard of reportCards) {
+        const student = reportCard.student;
+        const pdfStream = new PassThrough();
+        
+        generateReportCardPDF(pdfStream, reportCard, school, student);
+        
+        archive.append(pdfStream, { 
+          name: `ReportCard_${student.studentId}_${student.firstName}_${student.lastName}.pdf` 
+        });
+      }
+
+      await archive.finalize();
     } catch (err) {
       res.status(500).json({ message: "Server error", error: err.message });
     }
