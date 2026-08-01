@@ -47,22 +47,29 @@ const assertJwtSecret = () => {
 
 /**
  * Sign a short-lived access token.
- * @param {object} payload - { userId, role, email }
+ * @param {object} payload - { userId, role, email, schoolId }
  * @returns {string} signed JWT
  */
 const signAccessToken = (payload) => {
   const secret = process.env.JWT_SECRET;
   if (!secret) throw new Error("JWT_SECRET is not configured");
 
+  const tokenPayload = {
+    userId: payload.userId,
+    role: payload.role,
+    email: payload.email,
+    jti: randomUUID(),
+    iss: "school-management-saas",
+    aud: "school-management-client",
+  };
+
+  // Include schoolId for multi-tenant isolation (Phase 1: Tenancy Enforcement)
+  if (payload.schoolId) {
+    tokenPayload.schoolId = payload.schoolId;
+  }
+
   return jwt.sign(
-    {
-      userId: payload.userId,
-      role: payload.role,
-      email: payload.email,
-      jti: randomUUID(),
-      iss: "school-management-saas",
-      aud: "school-management-client",
-    },
+    tokenPayload,
     secret,
     {
       expiresIn: process.env.JWT_EXPIRES_IN || "24h",

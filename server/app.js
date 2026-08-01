@@ -37,6 +37,7 @@ const morgan = require("morgan");
 
 const { apiLimiter, authLimiter, uploadLimiter, xssProtection, validateInput, preventInjection, corsOptions, helmetConfig } = require("./middleware/security");
 const licenseGuard = require("./middleware/licenseGuard");
+const { tenantContext } = require("./middleware/tenantContext");
 const { getInstance } = require("./services/licenseService");
 const SchoolConfig = require("./models/SchoolConfig");
 const SchoolProfile = require("./models/SchoolProfile");
@@ -84,6 +85,10 @@ app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
 // 5. Compression middleware
 app.use(compression());
+
+// 6. Tenant context — extract schoolId for multi-tenant isolation
+// Must run after body parsing, before route handlers
+app.use("/api", tenantContext);
 
 // 6. Security middleware that needs body parsing
 app.use((req, res, next) => {

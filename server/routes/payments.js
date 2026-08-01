@@ -12,9 +12,17 @@ const { generateReceiptPDF } = require("../services/pdfService");
 
 // Helper to fetch/ensure school ID for the tenant context
 async function getSchoolId() {
+  // 1. Prefer tenant context from authenticated user (AsyncLocalStorage)
+  const { getTenantSchoolId } = require("../middleware/tenantContext");
+  const tenantSchoolId = getTenantSchoolId();
+  if (tenantSchoolId) return tenantSchoolId;
+
+  // 2. Fallback: default profile (single-school databases)
   const profile = await SchoolProfile.findOne({ key: "default" });
   if (profile) return profile._id;
-  return new mongoose.Types.ObjectId("6a40bb51bc763e2a0a45ad9e");
+
+  // 3. Hard fail — never use a hardcoded ObjectId
+  throw new Error("School not configured");
 }
 
 // @route   POST /api/payments

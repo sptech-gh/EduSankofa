@@ -365,7 +365,12 @@ router.post("/login", async (req, res) => {
     entry.firstAt = now;
     limiter.set(key, entry);
 
-    const token = signAccessToken({ userId: user._id, role: user.role, email: user.email });
+    const token = signAccessToken({ 
+      userId: user._id, 
+      role: user.role, 
+      email: user.email,
+      schoolId: user.schoolId 
+    });
     const refreshToken = signRefreshToken({ userId: user._id, tokenVersion: user.__v || 0 });
 
     if (req.body && req.body.deviceId) {
