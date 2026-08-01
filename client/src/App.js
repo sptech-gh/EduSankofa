@@ -396,7 +396,7 @@ function App() {
             <Route
               path="/school-setup"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <SchoolSetup />
                   </AppLayout>
@@ -406,7 +406,7 @@ function App() {
             <Route
               path="/school-setup/academic-years"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <AcademicYearsManagement />
                   </AppLayout>
@@ -416,7 +416,7 @@ function App() {
             <Route
               path="/school-setup/terms"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <TermsManagement />
                   </AppLayout>
@@ -426,7 +426,7 @@ function App() {
             <Route
               path="/school-setup/classes"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <ClassesManagement />
                   </AppLayout>
@@ -436,7 +436,7 @@ function App() {
             <Route
               path="/school-setup/teacher-assignments"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <TeacherAssignmentsManagement />
                   </AppLayout>
@@ -446,7 +446,7 @@ function App() {
             <Route
               path="/school-setup/school-profile"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <SchoolProfileSettings />
                   </AppLayout>
@@ -456,7 +456,7 @@ function App() {
             <Route
               path="/school-setup/grading-settings"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <GradingSettingsManagement />
                   </AppLayout>
@@ -468,7 +468,7 @@ function App() {
             <Route
               path="/promotion"
               element={
-                <ProtectedRoute roles={["admin", "staff"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor", "staff"]}>
                   <AppLayout>
                     <PromotionManagement />
                   </AppLayout>
@@ -478,7 +478,7 @@ function App() {
             <Route
               path="/system-settings"
               element={
-                <ProtectedRoute roles={["admin"]}>
+                <ProtectedRoute roles={["admin", "school admin", "super admin", "headmaster", "proprietor"]}>
                   <AppLayout>
                     <SystemSettings />
                   </AppLayout>
