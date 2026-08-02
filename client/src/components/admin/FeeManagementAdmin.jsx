@@ -16,6 +16,12 @@ const GHS_CATEGORIES = [
   'MISCELLANEOUS','CUSTOM','EXTRACURRICULAR','OTHER',
 ];
 
+// Generate a component code from the name, e.g. "Tuition Fees" -> "TUITION_FEES"
+const generateComponentCode = (name) => {
+  const cleaned = String(name || '').toUpperCase().replace(/[^A-Z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+  return cleaned || 'FEE_COMPONENT';
+};
+
 const BILLING_CYCLES = ['PER_TERM', 'PER_YEAR', 'ONE_TIME', 'DAILY', 'MONTHLY'];
 
 const TABS = [
@@ -78,13 +84,14 @@ const ComponentsTab = () => {
   };
 
   const handleSubmit = async () => {
-    if (!form.name || !form.code || !form.category || !form.billingCycle) { setError('Name, code, category, and billing cycle are required'); return; }
+    if (!form.name || !form.category || !form.billingCycle) { setError('Name, category, and billing cycle are required'); return; }
+    const payload = { ...form, code: (form.code || '').trim() || generateComponentCode(form.name) };
     setSubmitting(true); setError('');
     try {
       if (editing) {
-        await apiService.patch(`/api/admin/fees/components/${editing._id}`, form);
+        await apiService.patch(`/api/admin/fees/components/${editing._id}`, payload);
       } else {
-        await apiService.post('/api/admin/fees/components', form);
+        await apiService.post('/api/admin/fees/components', payload);
       }
       setShowForm(false); load();
     } catch (err) {
