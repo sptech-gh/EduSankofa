@@ -261,7 +261,7 @@ const ComponentsTab = () => {
 };
 
 // ─── Class Schedules Tab ───────────────────────────────────────────────────────
-const emptySchedule = { academicYear: '', term: 1, classCode: '', studentType: 'ALL', fees: [] };
+const emptySchedule = { academicYear: '', term: 1, classCode: '', studentType: 'ALL', dueDate: '', fees: [] };
 
 const SchedulesTab = () => {
   const [schedules, setSchedules] = useState([]);
@@ -322,7 +322,7 @@ const SchedulesTab = () => {
   const addFeeRow = () => {
     setForm(prev => ({
       ...prev,
-      fees: [...prev.fees, { feeComponentId: '', amountPesewas: '', dueDate: '', notes: '' }],
+      fees: [...prev.fees, { feeComponentId: '', amount: '', notes: '' }],
     }));
   };
 
@@ -342,13 +342,16 @@ const SchedulesTab = () => {
     if (!form.academicYear) { setError('Please select an academic year'); return; }
     if (!form.term) { setError('Please select a term'); return; }
     if (!form.classCode) { setError('Please select a class'); return; }
+    if (!form.dueDate) { setError('Please set the payment due date'); return; }
     if (form.fees.length === 0) { setError('At least one fee line item is required'); return; }
     for (const fee of form.fees) {
-      if (!fee.feeComponentId || !fee.amountPesewas || !fee.dueDate) { setError('Each fee row must have a component, amount, and due date'); return; }
+      if (!fee.feeComponentId || !fee.amount) { setError('Each fee row must have a component and amount'); return; }
     }
+    // Apply the single schedule due date to all fee line items and convert GHS to pesewas
+    const payload = { ...form, fees: form.fees.map(f => ({ feeComponentId: f.feeComponentId, amountPesewas: Math.round(Number(f.amount) * 100), dueDate: form.dueDate, notes: f.notes || '' })) };
     setSubmitting(true); setError('');
     try {
-      await apiService.post('/api/admin/fees/schedules', form);
+      await apiService.post('/api/admin/fees/schedules', payload);
       setShowForm(false); setForm(emptySchedule); load();
     } catch (err) { setError(err?.message || 'Save failed'); }
     setSubmitting(false);
@@ -364,7 +367,7 @@ const SchedulesTab = () => {
     setPublishing(null);
   };
 
-  const totalPesewas = form.fees.reduce((s, f) => s + (parseInt(f.amountPesewas) || 0), 0);
+  const totalPesewas = form.fees.reduce((s, f) => s + (Math.round(Number(f.amount) * 100) || 0), 0);
 
   return (
     <div>
@@ -378,7 +381,7 @@ const SchedulesTab = () => {
         <div style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 14, padding: 24, marginBottom: 24 }}>
           <h3 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: 15, marginBottom: 20 }}>📅 New Class Fee Schedule</h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 14, marginBottom: 20 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 14, marginBottom: 20 }}>
             <div>
               <label style={labelStyle}>ACADEMIC YEAR*</label>
               <select value={form.academicYear} onChange={e => setForm(p => ({ ...p, academicYear: e.target.value }))} style={inputStyle}>
@@ -419,6 +422,10 @@ const SchedulesTab = () => {
                 <option value="BOARDING">Boarding Students</option>
               </select>
             </div>
+            <div>
+              <label style={labelStyle}>PAYMENT DUE DATE*</label>
+              <input type="date" value={form.dueDate} onChange={e => setForm(p => ({ ...p, dueDate: e.target.value }))} style={inputStyle} />
+            </div>
           </div>
 
           {/* Fee Line Items */}
@@ -433,16 +440,15 @@ const SchedulesTab = () => {
             )}
 
             {form.fees.map((fee, i) => (
-              <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr auto', gap: 10, marginBottom: 10, alignItems: 'center' }}>
+              <div key={i} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr auto', gap: 10, marginBottom: 10, alignItems: 'center' }}>
                 <select value={fee.feeComponentId} onChange={e => updateFeeRow(i, 'feeComponentId', e.target.value)} style={inputStyle}>
                   <option value="">Select component…</option>
                   {components.length === 0 && <option value="" disabled>No fee components found — create them in the Fee Components tab first</option>}
                   {components.map(c => <option key={c._id} value={c._id}>{c.name} ({c.category})</option>)}
                 </select>
-                <input value={fee.amountPesewas} onChange={e => updateFeeRow(i, 'amountPesewas', e.target.value)}
-                  placeholder="Amount (pesewas)" style={inputStyle} type="number" min="0" />
-                <input type="date" value={fee.dueDate} onChange={e => updateFeeRow(i, 'dueDate', e.target.value)} style={inputStyle} />
-                <input value={fee.notes} onChange={e => updateFeeRow(i, 'notes', e.target.value)} placeholder="Notes" style={inputStyle} />
+                <input value={fee.amount} onChange={e => updateFeeRow(i, 'amount', e.target.value)}
+                  placeholder="Amount (GHS)" style={inputStyle} type="number" min="0" step="0.01" />
+                <input value={fee.notes} onChange={e => updateFeeRow(i, 'notes', e.target.value)} placeholder="Notes (optional)" style={inputStyle} />
                 <button onClick={() => removeFeeRow(i)} style={{ color: '#f87171', background: 'none', border: 'none', cursor: 'pointer', fontSize: 18, padding: '0 4px' }}>×</button>
               </div>
             ))}
