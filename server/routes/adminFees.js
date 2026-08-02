@@ -372,8 +372,15 @@ router.patch(
         return res.status(409).json({ message: "Published schedules cannot be edited" });
       }
 
+      // Allow editing core fields on drafts
+      if (req.body.academicYear) schedule.academicYear = req.body.academicYear;
+      if (req.body.term !== undefined) schedule.term = Number(req.body.term);
+      if (req.body.classCode) schedule.classCode = req.body.classCode;
+
       const incomingFees = req.body.fees || req.body.lineItems;
       if (incomingFees) {
+        // Apply schedule-level due date to fees if provided
+        const dueDate = req.body.dueDate;
         // Validate component existence
         const snapshotFees = [];
         for (const fee of incomingFees) {
@@ -394,18 +401,48 @@ router.patch(
             amountPesewas,
             originalAmountPesewas: Number(fee.originalAmountPesewas ?? amountPesewas),
             discountAmountPesewas: Number(fee.discountAmountPesewas ?? 0),
-            dueDate: fee.dueDate,
+            dueDate: fee.dueDate || dueDate,
             notes: fee.notes || "",
             isOptional: !!comp.isOptional,
           });
         }
         schedule.fees = snapshotFees;
+      } else if (req.body.dueDate) {
+        // Apply a new due date to all existing fees
+        schedule.fees = schedule.fees.map(f => ({ ...f, dueDate: req.body.dueDate }));
       }
       if (req.body.studentType) schedule.studentType = req.body.studentType;
       schedule.updatedBy = req.user._id;
+      schedule.totalScheduledPesewas = schedule.fees.reduce((sum, fee) => sum + Number(fee.amountPesewas || 0), 0);
 
       await schedule.save();
       res.json(schedule);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+// @route   DELETE /api/admin/fees/schedules/:id
+// @desc    Delete a draft schedule (published schedules cannot be deleted)
+router.delete(
+  "/schedules/:id",
+  auth,
+  authorizeRoles("school admin", "admin"),
+  async (req, res, next) => {
+    try {
+      const schoolId = await getSchoolId();
+      const schedule = await ClassFeeSchedule.findOne({ _id: req.params.id, schoolId });
+      if (!schedule) {
+        return res.status(404).json({ message: "Class Fee Schedule not found" });
+      }
+
+      if (schedule.isPublished || schedule.status === "PUBLISHED") {
+        return res.status(409).json({ message: "Published schedules cannot be deleted. Archive it instead." });
+      }
+
+      await ClassFeeSchedule.deleteOne({ _id: schedule._id, schoolId });
+      res.json({ message: "Class Fee Schedule deleted." });
     } catch (err) {
       next(err);
     }

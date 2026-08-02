@@ -275,6 +275,8 @@ const SchedulesTab = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [publishing, setPublishing] = useState(null);
+  const [deleting, setDeleting] = useState(null);
+  const [editingSchedule, setEditingSchedule] = useState(null);
 
   // Load fee components separately — must succeed even if other data fails
   const loadComponents = useCallback(async () => {
@@ -351,8 +353,12 @@ const SchedulesTab = () => {
     const payload = { ...form, fees: form.fees.map(f => ({ feeComponentId: f.feeComponentId, amountPesewas: Math.round(Number(f.amount) * 100), dueDate: form.dueDate, notes: f.notes || '' })) };
     setSubmitting(true); setError('');
     try {
-      await apiService.post('/api/admin/fees/schedules', payload);
-      setShowForm(false); setForm(emptySchedule); load();
+      if (editingSchedule) {
+        await apiService.patch(`/api/admin/fees/schedules/${editingSchedule}`, payload);
+      } else {
+        await apiService.post('/api/admin/fees/schedules', payload);
+      }
+      setShowForm(false); setForm(emptySchedule); setEditingSchedule(null); load();
     } catch (err) { setError(err?.message || 'Save failed'); }
     setSubmitting(false);
   };
@@ -367,19 +373,52 @@ const SchedulesTab = () => {
     setPublishing(null);
   };
 
+  const handleEdit = async (id) => {
+    try {
+      const s = await apiService.get(`/api/admin/fees/schedules/${id}`);
+      setForm({
+        academicYear: s.academicYear || '',
+        term: s.term || 1,
+        classCode: s.classCode || '',
+        studentType: s.studentType || 'ALL',
+        dueDate: (s.fees && s.fees[0] && s.fees[0].dueDate) || '',
+        fees: (s.fees || []).map(f => ({ feeComponentId: f.feeComponentId?._id || f.feeComponentId, amount: (Number(f.amountPesewas) / 100).toString(), notes: f.notes || '' })),
+      });
+      setEditingSchedule(id);
+      setError('');
+      setShowForm(true);
+    } catch (err) { alert(err?.message || 'Failed to load schedule'); }
+  };
+
+  const handleDelete = async (id) => {
+    if (!window.confirm('Delete this draft schedule?')) return;
+    setDeleting(id);
+    try {
+      await apiService.delete(`/api/admin/fees/schedules/${id}`);
+      if (editingSchedule === id) { setShowForm(false); setEditingSchedule(null); setForm(emptySchedule); }
+      load();
+    } catch (err) { alert(err?.message || 'Delete failed'); }
+    setDeleting(null);
+  };
+
+  const resetForm = () => { setForm(emptySchedule); setEditingSchedule(null); setError(''); setShowForm(true); };
+
   const totalPesewas = form.fees.reduce((s, f) => s + (Math.round(Number(f.amount) * 100) || 0), 0);
 
   return (
     <div>
       <div style={{ display: 'flex', gap: 12, marginBottom: 20, alignItems: 'center' }}>
         <span style={{ color: '#64748b', fontSize: 13 }}>{schedules.length} schedule(s)</span>
-        <button onClick={() => { setShowForm(true); setForm(emptySchedule); setError(''); }} style={{ ...btnPrimary, marginLeft: 'auto' }}>+ New Schedule</button>
+        <button onClick={resetForm} style={{ ...btnPrimary, marginLeft: 'auto' }}>+ New Schedule</button>
       </div>
 
       {/* Schedule Creation Form */}
       {showForm && (
         <div style={{ background: 'rgba(99,102,241,0.06)', border: '1px solid rgba(99,102,241,0.2)', borderRadius: 14, padding: 24, marginBottom: 24 }}>
-          <h3 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: 15, marginBottom: 20 }}>📅 New Class Fee Schedule</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+            <h3 style={{ color: '#e2e8f0', fontWeight: 700, fontSize: 15 }}>{editingSchedule ? '✏️ Edit Class Fee Schedule' : '📅 New Class Fee Schedule'}</h3>
+            {editingSchedule && <button onClick={resetForm} style={{ ...btnGhost, padding: '5px 12px', fontSize: 12 }}>Cancel Edit</button>}
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr 1fr', gap: 14, marginBottom: 20 }}>
             <div>
@@ -464,7 +503,7 @@ const SchedulesTab = () => {
           {error && <div style={{ background: 'rgba(239,68,68,0.12)', borderRadius: 8, padding: '10px 14px', color: '#f87171', fontSize: 13, marginBottom: 14 }}>{error}</div>}
 
           <div style={{ display: 'flex', gap: 10 }}>
-            <button onClick={handleSubmit} disabled={submitting} style={btnPrimary}>{submitting ? 'Creating…' : 'Create Schedule (Draft)'}</button>
+            <button onClick={handleSubmit} disabled={submitting} style={btnPrimary}>{submitting ? 'Saving…' : (editingSchedule ? 'Save Changes' : 'Create Schedule (Draft)')}</button>
             <button onClick={() => { setShowForm(false); setForm(emptySchedule); }} style={btnGhost}>Cancel</button>
           </div>
         </div>
@@ -505,10 +544,18 @@ const SchedulesTab = () => {
                   </td>
                   <td style={{ padding: '10px 14px' }}>
                     {s.status === 'DRAFT' && (
-                      <button onClick={() => handlePublish(s._id)} disabled={publishing === s._id}
-                        style={{ color: '#34d399', fontSize: 12, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>
-                        {publishing === s._id ? 'Publishing…' : '▶ Publish'}
-                      </button>
+                      <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+                        <button onClick={() => handleEdit(s._id)}
+                          style={{ color: '#93c5fd', fontSize: 12, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>✏️ Edit</button>
+                        <button onClick={() => handlePublish(s._id)} disabled={publishing === s._id}
+                          style={{ color: '#34d399', fontSize: 12, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>
+                          {publishing === s._id ? 'Publishing…' : '▶ Publish'}
+                        </button>
+                        <button onClick={() => handleDelete(s._id)} disabled={deleting === s._id}
+                          style={{ color: '#f87171', fontSize: 12, background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700 }}>
+                          {deleting === s._id ? 'Deleting…' : '🗑 Delete'}
+                        </button>
+                      </div>
                     )}
                     {s.status === 'PUBLISHED' && (
                       <span style={{ color: '#475569', fontSize: 12 }}>Published ✓</span>
